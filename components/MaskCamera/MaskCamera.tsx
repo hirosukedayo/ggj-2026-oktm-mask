@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import styles from "./MaskCamera.module.css";
+import { TEXT } from "@/utils/locales";
 
 interface MaskCameraProps {
   imageSrc: string;
@@ -205,10 +206,13 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
 
           {/* Reticle inside the lens */}
           <div className={styles.reticle}>
-            <div className={styles.reticleLabel}>{disabled ? 'FULL' : 'CAPTURE'}</div>
+            <div className={styles.reticleLabel}>
+              {disabled ? TEXT.UI.RETICLE_LIMIT : TEXT.UI.RETICLE_CAPTURE}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
