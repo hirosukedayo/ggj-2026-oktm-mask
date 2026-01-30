@@ -1,0 +1,43 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 80px;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: var(--font-geist-sans, sans-serif);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin: 0;
+}
+
+.description {
+  font-size: 1.5rem;
+  color: #888;
+}
+
+.button {
+  padding: 16px 32px;
+  background: #fff;
+  color: #000;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
