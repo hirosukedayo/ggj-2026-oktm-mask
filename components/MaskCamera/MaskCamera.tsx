@@ -8,7 +8,9 @@ interface MaskCameraProps {
   width: number;
   height: number;
   maskRadius?: number; // In this context, it's half-width of the square
-  onCapture?: (dataUrl: string) => void;
+  onCapture?: (dataUrl: string, position: { x: number, y: number }) => void;
+  disabled?: boolean;
+  revealedAreas?: Array<{ x: number; y: number }>;
 }
 
 export const MaskCamera: React.FC<MaskCameraProps> = ({
@@ -17,6 +19,8 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
   height,
   maskRadius = 100, // This is half-size of the aperture
   onCapture,
+  disabled = false,
+  revealedAreas = [],
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isFlashing, setIsFlashing] = useState(false);
@@ -43,6 +47,8 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
   };
 
   const handleClick = () => {
+    if (disabled) return;
+
     // Trigger Flash
     setIsFlashing(true);
     setTimeout(() => setIsFlashing(false), 300);
@@ -56,10 +62,6 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
     // Capture logic
     // We need to map the current view coordinates (in 'width' x 'height' space)
     // to the original image coordinates (naturalWidth x naturalHeight).
-
-    // The "View" size on screen is props.width x props.height.
-    // The "Aperture" size on screen is maskRadius*2.
-    // The "Crop" top-left on screen is (position.x - maskRadius, position.y - maskRadius).
 
     const displaySizeX = width;
     const displaySizeY = height;
@@ -102,8 +104,8 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
         apertureSize
       );
 
-      // The result in canvas is CLEAN (no blur), because we draw directly from source image.
-      onCapture(cropCanvas.toDataURL());
+      // The result in canvas is CLEAN (no blur)
+      onCapture(cropCanvas.toDataURL(), { x: position.x, y: position.y });
     };
   };
 
@@ -111,7 +113,7 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
     <div
       ref={containerRef}
       className={styles.container}
-      style={{ width, height }}
+      style={{ width, height, cursor: disabled ? 'not-allowed' : 'crosshair' }}
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
       onClick={handleClick}
@@ -129,6 +131,45 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
         />
       </div>
 
+      {/* Revealed Areas (Clear) */}
+      {revealedAreas.map((area, index) => (
+        <div
+          key={index}
+          style={{
+            position: 'absolute',
+            left: area.x - maskRadius,
+            top: area.y - maskRadius,
+            width: maskRadius * 2,
+            height: maskRadius * 2,
+            borderRadius: 12, // Match lens shape
+            overflow: 'hidden',
+            pointerEvents: 'none',
+            zIndex: 5, // Above blur, below lens
+            boxShadow: '0 0 10px rgba(0,0,0,0.5)'
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: width,
+              height: height,
+              transform: `translate(${- (area.x - maskRadius)}px, ${- (area.y - maskRadius)}px)`,
+            }}
+          >
+            {/* Use the clear image here */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageSrc}
+              alt=""
+              style={{ width: width, height: height, objectFit: 'cover' }}
+              draggable={false}
+            />
+          </div>
+        </div>
+      ))}
+
       {/* The Mask/Lens - view finder */}
       <div
         className={styles.lens}
@@ -137,6 +178,8 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
           height: maskRadius * 2,
           left: position.x - maskRadius,
           top: position.y - maskRadius,
+          opacity: disabled ? 0.5 : 1,
+          borderColor: disabled ? '#555' : 'rgba(255, 255, 255, 0.9)'
         }}
       >
         <div
@@ -152,12 +195,17 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imageSrc} alt="Target" width={width} height={height} draggable={false} />
+            <img
+              src={imageSrc}
+              alt="Target"
+              style={{ width: width, height: height, objectFit: 'cover' }}
+              draggable={false}
+            />
           </div>
 
           {/* Reticle inside the lens */}
           <div className={styles.reticle}>
-            <div className={styles.reticleLabel}>CAPTURE</div>
+            <div className={styles.reticleLabel}>{disabled ? 'FULL' : 'CAPTURE'}</div>
           </div>
         </div>
       </div>

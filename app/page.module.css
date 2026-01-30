@@ -36,8 +36,74 @@
   font-weight: 600;
   text-decoration: none;
   transition: opacity 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .button:hover {
   opacity: 0.8;
+}
+
+.prologueContainer {
+  max-width: 600px;
+  text-align: center;
+  animation: fadeIn 2s ease-out forwards;
+}
+
+.prologueText {
+  font-size: 1.2rem;
+  line-height: 2;
+  margin-bottom: 40px;
+}
+
+.instruction {
+  font-size: 0.9rem;
+  color: #666;
+  animation: pulse 2s infinite;
+}
+
+.fadeIn {
+  animation: fadeIn 1.5s ease-out forwards;
+  pointer-events: auto;
+  opacity: 0;
+}
+
+.buttonWrapper {
+  height: 60px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hiddenState {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
 }
