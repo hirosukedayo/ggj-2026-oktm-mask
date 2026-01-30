@@ -5,7 +5,9 @@
   cursor: crosshair;
   user-select: none;
   touch-action: none;
-  border: 4px solid #333;
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
   border-radius: 8px;
 }
 
@@ -23,8 +25,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(40px) brightness(0.2);
-  transform: scale(1.1);
+  filter: blur(10px) brightness(0.9);
 }
 
 .lens {
@@ -51,7 +52,7 @@
 
 /* Lens Blur: Visible but detail is hidden until capture */
 .lensInner img {
-  filter: blur(8px) brightness(1.2) contrast(1.2);
+  filter: blur(4px) brightness(1.2) contrast(1.2);
 }
 
 .reticle {
