@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+// ... imports ...
+import { TEXT } from "@/utils/locales";
+
 export default function Home() {
   const [step, setStep] = useState<'title' | 'prologue'>('title');
   const [showPrologueButton, setShowPrologueButton] = useState(false);
@@ -25,25 +28,27 @@ export default function Home() {
       <main className={styles.main}>
         {step === 'title' ? (
           <>
-            <h1 className={styles.title}>2005年6月13日<br />香川県善通寺未解決暴動事件</h1>
+            <h1 className={styles.title} style={{ whiteSpace: 'pre-wrap' }}>
+              {TEXT.TITLE_SCREEN.TITLE}
+            </h1>
             <p className={styles.description}>
-              Okutama Game Jam 2026 - Team B
+              {TEXT.TITLE_SCREEN.DESCRIPTION}
             </p>
 
             <div className={styles.actions}>
               <button onClick={handleStart} className={styles.button}>
-                Start
+                {TEXT.TITLE_SCREEN.BUTTON_START}
               </button>
             </div>
           </>
         ) : (
           <div className={styles.prologueContainer}>
             <div className={styles.prologueText}>
-              <p>その日、街は静寂に包まれていた。</p>
+              <p>{TEXT.PROLOGUE.LINE_1}</p>
               <br />
-              <p>しかし、カメラだけが真実を知っていた。</p>
+              <p>{TEXT.PROLOGUE.LINE_2}</p>
               <br />
-              <p>隠された痕跡を探せ。</p>
+              <p>{TEXT.PROLOGUE.LINE_3}</p>
             </div>
             <div className={styles.buttonWrapper}>
               <button
@@ -51,7 +56,7 @@ export default function Home() {
                 disabled={!showPrologueButton}
                 className={`${styles.button} ${showPrologueButton ? styles.fadeIn : styles.hiddenState}`}
               >
-                調査を開始する
+                {TEXT.PROLOGUE.BUTTON_ACTION}
               </button>
             </div>
           </div>
@@ -60,3 +65,4 @@ export default function Home() {
     </div>
   );
 }
+
