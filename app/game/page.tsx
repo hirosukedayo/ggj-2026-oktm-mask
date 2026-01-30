@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { MaskCamera } from "@/components/MaskCamera/MaskCamera";
 import styles from "./game.module.css";
 import { TEXT } from "@/utils/locales";
@@ -16,6 +17,7 @@ interface Photo {
 type GamePhase = 'capturing' | 'result' | 'ending';
 
 export default function GamePage() {
+    const router = useRouter();
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
 
@@ -138,7 +140,7 @@ export default function GamePage() {
                         <hr className={styles.separator} />
                         <p className={styles.credits}>{TEXT.ENDING.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={handleReset} style={{ marginTop: '40px' }}>
+                        <button className={styles.resetButton} onClick={() => router.push('/')} style={{ marginTop: '40px' }}>
                             Title
                         </button>
                     </div>

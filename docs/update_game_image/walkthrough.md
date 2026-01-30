@@ -1,31 +1,27 @@
-# Game Image & Atmosphere Update
+# Game Aspect Ratio & Atmosphere Update
 
 ## Changes Created
-- **Image Resource**: Replaced the main game image with `Okutama_Bteam_mock.png`, moved to `public/images/`.
-- **Atmosphere**: Updated `locales.ts` to use more poetic, introspective language for the Prologue.
-    - "深い霧の向こうに..." (Beyond the deep fog...) instead of simple descriptive text.
-- **UI Cleanup**: Removed numerical score displays from the Result screen in `app/game/page.tsx` to focus on the narrative and visual feedback only.
+- **Aspect Ratio**: Updated game dimensions to **960x540 (16:9)** to perfectly separate the aspect ratio of the new background image (`Okutama_Bteam_mock.png`, 1920x1080).
+- **Image Resource**: Replaced the main game image with `Okutama_Bteam_mock.png` (moved to `public/images/`).
+- **Atmosphere**: Updated `locales.ts` to use poetic, introspective language for the Prologue.
+- **UI Cleanup**: Removed numerical score displays from the Result screen.
 
 ## Verification Results
 
 ### Automated Browser Test
 A browser subagent verified the updates:
-1.  **Prologue**: Confirmed new poetic text is displayed.
-2.  **Visuals**: Verified the game now uses the new background image.
-3.  **Result Screen**: Confirmed that **numerical scores are NO LONGER visible**. Only photographic results and the story message are shown.
-4.  **Flow**: Confirmed the game flow (Capture -> Result -> Ending/Reset) still functions correctly without the score numbers.
+1.  **Aspect Ratio**: Confirmed the game area and background image are 960x540 (16:9). The image is fully visible without significant cropping.
+2.  **Visuals**: Verified the new image and mask interaction.
+3.  **Flow**: Confirmed capturing memories and transitioning to result/ending works correctly with the new coordinate system.
+4.  **UI**: Verified score numbers are hidden and poetic text is displayed.
 
 ### Key Code Changes
-```ts
-// utils/locales.ts (Prologue)
-PROLOGUE: {
-    LINE_1: "深い霧の向こうに、\n置き忘れた景色がある。",
-    // ...
-}
-```
-
 ```tsx
-// app/game/page.tsx (Result Screen)
-// Removed: <p>{TEXT.RESULT.SCORE_LABEL}: {photo.score}</p>
-// Removed: <h3>{TEXT.RESULT.TOTAL_SCORE_LABEL}: {totalScore}</h3>
+// app/game/page.tsx
+<MaskCamera
+    imageSrc="/images/Okutama_Bteam_mock.png"
+    width={960}  // 16:9 Aspect Ratio
+    height={540} // (960 / 1.777...)
+    // ...
+/>
 ```
