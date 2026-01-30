@@ -5,14 +5,14 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h1 className={styles.title}>Project: MASK</h1>
+        <h1 className={styles.title}>2005年6月13日 香川県善通寺未解決暴動事件</h1>
         <p className={styles.description}>
           Okutama Game Jam 2026 - Team B
         </p>
 
         <div className={styles.actions}>
           <Link href="/game" className={styles.button}>
-            Start Investigation
+            Start
           </Link>
         </div>
       </main>
