@@ -7,6 +7,7 @@ import styles from "./game.module.css";
 import { TextSegment } from "@/utils/locales";
 import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
+import { EyeOpenTransition } from "@/components/EyeOpenTransition/EyeOpenTransition";
 import { SPOTS, Spot } from "./constants";
 
 interface Photo {
@@ -24,6 +25,7 @@ export default function GamePage() {
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
     const { text } = useLanguage();
+    const [showTransition, setShowTransition] = useState(true);
 
     // Route guard: Redirect to title if not started via prologue
     React.useEffect(() => {
@@ -134,6 +136,7 @@ export default function GamePage() {
         setCapturedPhotos([]);
         setPhase('capturing');
         setShowResultSummary(false);
+        setShowTransition(true); // Trigger transition again
     };
 
     const revealedAreas = capturedPhotos.map(p => ({ x: p.x, y: p.y }));
@@ -165,6 +168,10 @@ export default function GamePage() {
 
     return (
         <div className={styles.container}>
+            {showTransition && (
+                <EyeOpenTransition onComplete={() => setShowTransition(false)} />
+            )}
+
             {/* Main Game Area */}
             <main className={styles.mainArea}>
                 <MaskCamera
@@ -249,4 +256,3 @@ export default function GamePage() {
         </div>
     );
 }
-
