@@ -182,8 +182,6 @@ export default function GamePage() {
             {(phase === 'result' || phase === 'ending') && (
                 <div className={styles.resultOverlay}>
                     <div className={styles.resultContent}>
-                        <h2>{isEndingConditionMet ? text.RESULT.TITLE : "記憶の断片"}</h2>
-
                         <div className={styles.resultPhotos}>
                             {capturedPhotos.map((photo, index) => {
                                 const info = getPhotoInfo(photo);

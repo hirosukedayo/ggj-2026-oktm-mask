@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ClickToAdvanceText.module.css';
+import { FlickerText } from '../FlickerText/FlickerText';
 
 export type TextSegment = {
     text: string;
@@ -89,7 +90,7 @@ export const ClickToAdvanceText: React.FC<ClickToAdvanceTextProps> = ({
         <div className={`${styles.container} ${className || ''}`}>
             <div className={styles.textContainer}>
                 <div key={currentIndex} className={`${styles.segment} ${getTypeClass(currentSegment)}`} style={getStyle(currentSegment)}>
-                    {getText(currentSegment)}
+                    <FlickerText text={getText(currentSegment)} />
                 </div>
             </div>
             {!finished && (
