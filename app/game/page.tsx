@@ -230,8 +230,7 @@ export default function GamePage() {
                                 onComplete={() => setShowResultSummary(true)}
                                 className={showResultSummary ? styles.textFinished : ''}
                                 finished={showResultSummary}
-                                bgmSrc="/sounds/scenario_txt_bgm.mp3"
-                                bgmVolume={SCENARIO_BGM_VOLUME}
+                                flickerSoundSrc="/sounds/scenario_txt_bgm.mp3"
                             />
                         </div>
 
