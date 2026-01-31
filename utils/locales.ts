@@ -10,7 +10,7 @@ export const TEXT = {
         RETICLE_CAPTURE: "RECALL",
         RETICLE_LIMIT: "LIMIT",
         BUTTON_RESET: "もう一度思い出す",
-        BUTTON_ENDING: "真実の記憶へ",
+        BUTTON_ENDING: "全て思い出す",
         BUTTON_TITLE_BACK: "タイトルへ戻る",
     },
     TITLE_SCREEN: {
