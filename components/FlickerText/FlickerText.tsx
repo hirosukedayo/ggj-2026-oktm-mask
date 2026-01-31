@@ -45,9 +45,13 @@ export const FlickerText: React.FC<FlickerTextProps> = ({
     return (
         <span className={className}>
             {chars.map((item, i) => (
-                <span key={i} className={item.className} style={item.style}>
-                    {item.char}
-                </span>
+                item.char === '\n' ? (
+                    <br key={i} />
+                ) : (
+                    <span key={i} className={item.className} style={item.style}>
+                        {item.char}
+                    </span>
+                )
             ))}
         </span>
     );
