@@ -1,0 +1,144 @@
+.char {
+    display: inline-block;
+    opacity: 0;
+    white-space: pre;
+    will-change: opacity;
+}
+
+@keyframes flicker1 {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    15% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes flicker2 {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    15% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    35% {
+        opacity: 1;
+    }
+
+    45% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 0;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes flicker3 {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.flicker1 {
+    animation-name: flicker1;
+}
+
+.flicker2 {
+    animation-name: flicker2;
+}
+
+.flicker3 {
+    animation-name: flicker3;
+}

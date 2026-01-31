@@ -153,6 +153,11 @@
     /* Added for responsiveness if needed */
 }
 
+/* Stagger photos nicely */
+.resultPhotos .photoCard:nth-child(even) {
+    margin-top: 50px;
+}
+
 .photoCard {
     background: transparent;
     padding: 0;

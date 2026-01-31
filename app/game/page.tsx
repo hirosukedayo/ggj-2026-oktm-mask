@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MaskCamera } from "@/components/MaskCamera/MaskCamera";
 import styles from "./game.module.css";
-import { TEXT, TextSegment } from "@/utils/locales";
+import { TextSegment } from "@/utils/locales";
+import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { SPOTS, Spot } from "./constants";
 
@@ -22,10 +23,11 @@ export default function GamePage() {
     const router = useRouter();
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
+    const { text } = useLanguage();
 
     // Route guard: Redirect to title if not started via prologue
     React.useEffect(() => {
-        // @ts-ignore
+        // @ts-expect-error
         const hasStarted = typeof window !== 'undefined' && window.oktmGameStarted;
 
         // In development (Strict Mode), effects run twice.
@@ -94,7 +96,7 @@ export default function GamePage() {
         const hasSpotB = capturedSpotIds.includes('spot_b');
 
         if (hasSpotA && hasSpotB) {
-            scenario = TEXT.RESULT.SCENARIO_ENDING[0];
+            scenario = text.RESULT.SCENARIO_ENDING[0];
         } else {
             // Condition 2: Incident Spots (Priority if no ending)
             // If multiple incidents are captured, we could prioritize or combine.
@@ -104,21 +106,21 @@ export default function GamePage() {
             if (incidentId) {
                 switch (incidentId) {
                     case 'murder':
-                        scenario = TEXT.RESULT.SCENARIO_MURDER[0];
+                        scenario = text.RESULT.SCENARIO_MURDER[0];
                         break;
                     case 'bicycle':
-                        scenario = TEXT.RESULT.SCENARIO_BICYCLE[0];
+                        scenario = text.RESULT.SCENARIO_BICYCLE[0];
                         break;
                     case 'wildfire':
-                        scenario = TEXT.RESULT.SCENARIO_WILDFIRE[0];
+                        scenario = text.RESULT.SCENARIO_WILDFIRE[0];
                         break;
                     default:
                         // Fallback shouldn't happen if check matches
-                        scenario = TEXT.RESULT.SCENARIO_A[0];
+                        scenario = text.RESULT.SCENARIO_A[0];
                 }
             } else {
                 // Condition 3: Failure / Random (Only one answer spot or random spots)
-                const patterns = TEXT.RESULT.SCENARIO_A;
+                const patterns = text.RESULT.SCENARIO_A;
                 const randomIndex = Math.floor(Math.random() * patterns.length);
                 scenario = patterns[randomIndex];
             }
@@ -145,14 +147,14 @@ export default function GamePage() {
     const getPhotoInfo = (photo: Photo) => {
         if (!photo.spotId) {
             return {
-                title: TEXT.EPISODE.NOTHING_TITLE,
-                desc: TEXT.EPISODE.NOTHING_DESC
+                title: text.EPISODE.NOTHING_TITLE,
+                desc: text.EPISODE.NOTHING_DESC
             };
         }
         const spot = SPOTS.find(s => s.id === photo.spotId);
         if (spot) {
             // Accessing dynamic keys.
-            const ep = TEXT.EPISODE as any;
+            const ep = text.EPISODE as Record<string, string>;
             return {
                 title: ep[spot.titleKey],
                 desc: ep[spot.descKey]
@@ -180,8 +182,6 @@ export default function GamePage() {
             {(phase === 'result' || phase === 'ending') && (
                 <div className={styles.resultOverlay}>
                     <div className={styles.resultContent}>
-                        <h2>{isEndingConditionMet ? TEXT.RESULT.TITLE : "記憶の断片"}</h2>
-
                         <div className={styles.resultPhotos}>
                             {capturedPhotos.map((photo, index) => {
                                 const info = getPhotoInfo(photo);
@@ -215,11 +215,11 @@ export default function GamePage() {
                                         className={`${styles.resetButton} ${styles.endingButton}`}
                                         onClick={() => setPhase('ending')}
                                     >
-                                        {TEXT.UI.BUTTON_ENDING}
+                                        {text.UI.BUTTON_ENDING}
                                     </button>
                                 ) : (
                                     <button className={styles.resetButton} onClick={handleReset}>
-                                        {TEXT.UI.BUTTON_RESET}
+                                        {text.UI.BUTTON_RESET}
                                     </button>
                                 )}
                             </div>
@@ -232,13 +232,13 @@ export default function GamePage() {
             {phase === 'ending' && (
                 <div className={styles.endingOverlay}>
                     <div className={styles.endingContent}>
-                        <h1 className={styles.endingTitle}>{TEXT.ENDING.TITLE}</h1>
-                        <p className={styles.endingDescription}>{TEXT.ENDING.DESCRIPTION}</p>
+                        <h1 className={styles.endingTitle}>{text.ENDING.TITLE}</h1>
+                        <p className={styles.endingDescription}>{text.ENDING.DESCRIPTION}</p>
                         <hr className={styles.separator} />
-                        <p className={styles.credits}>{TEXT.ENDING.CREDITS}</p>
+                        <p className={styles.credits}>{text.ENDING.CREDITS}</p>
 
                         <button className={styles.resetButton} onClick={() => router.push('/')} style={{ marginTop: '40px' }}>
-                            {TEXT.UI.BUTTON_TITLE_BACK}
+                            {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>
                 </div>
