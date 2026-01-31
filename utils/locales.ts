@@ -24,6 +24,18 @@ export const TEXT = {
             LOW: "まだ記憶が曖昧だ...\n\n霧の中にいるようで、何もかもがぼやけている。ただ、何かが起こったという感覚だけが残っている。もっと集中しなければ...",
         }
     },
+    EPISODE: {
+        SPOT_A_TITLE: "あの娘",
+        SPOT_A_DESC: "あの娘だ。",
+        SPOT_B_TITLE: "ぼく",
+        SPOT_B_DESC: "これは...ぼくか？",
+        SPOT_C_TITLE: "懐かしい風景",
+        SPOT_C_DESC: "昔よく遊んだ空き地だ。",
+        SPOT_D_TITLE: "奇妙な看板",
+        SPOT_D_DESC: "見慣れない看板がある。こんな店あったっけ？",
+        NOTHING_TITLE: "曖昧な記憶",
+        NOTHING_DESC: "何も思い出せなかった..."
+    },
     ENDING: {
         TITLE: "THE TRUTH",
         SUBTITLE: "Recovered Memory: 100%",

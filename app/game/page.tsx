@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import { MaskCamera } from "@/components/MaskCamera/MaskCamera";
 import styles from "./game.module.css";
 import { TEXT } from "@/utils/locales";
+import { SPOTS, Spot } from "./constants";
 
 interface Photo {
     id: number;
     url: string;
     x: number;
     y: number;
-    score: number;
+    spotId?: string;
 }
 
 type GamePhase = 'capturing' | 'result' | 'ending';
@@ -21,38 +22,35 @@ export default function GamePage() {
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
 
-    // Scoring logic based on distance from center
-    const calculateScore = (x: number, y: number, width: number, height: number): number => {
-        const centerX = width / 2;
-        const centerY = height / 2;
-        // Euclidean distance from center
-        const dist = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+    // Check collision with defined spots
+    const checkSpotCollision = (x: number, y: number): string | undefined => {
+        let closestSpot: Spot | null = null;
+        let minDistance = Infinity;
 
-        // Define thresholds (arbitrary based on 800x600 size)
-        // Center is (400, 300).
-        // 100px radius -> 3 points
-        // 250px radius -> 2 points
-        // else -> 1 point
+        SPOTS.forEach(spot => {
+            const dist = Math.sqrt(Math.pow(x - spot.x, 2) + Math.pow(y - spot.y, 2));
+            if (dist <= spot.radius) {
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    closestSpot = spot;
+                }
+            }
+        });
 
-        if (dist < 100) return 3;
-        if (dist < 250) return 2;
-        return 1;
+        return closestSpot?.id;
     };
 
     const handleCapture = (dataUrl: string, position: { x: number, y: number }) => {
         if (phase !== 'capturing') return;
 
-        const width = 960; // Match component props
-        const height = 540;
-
-        const score = calculateScore(position.x, position.y, width, height);
+        const spotId = checkSpotCollision(position.x, position.y);
 
         const newPhoto: Photo = {
             id: Date.now(),
             url: dataUrl,
             x: position.x,
             y: position.y,
-            score: score
+            spotId
         };
 
         const newPhotos = [newPhoto, ...capturedPhotos];
@@ -60,7 +58,6 @@ export default function GamePage() {
 
         // Check if we hit the limit (2 photos)
         if (newPhotos.length >= 2) {
-            // Small delay before showing results to let the user see the capture flash/feedback
             setTimeout(() => {
                 setPhase('result');
             }, 1000);
@@ -73,13 +70,29 @@ export default function GamePage() {
     };
 
     const revealedAreas = capturedPhotos.map(p => ({ x: p.x, y: p.y }));
-    const totalScore = capturedPhotos.reduce((sum, p) => sum + p.score, 0);
 
-    // Dynamic result message based on total score
-    const getResultMessage = (score: number) => {
-        if (score >= 6) return TEXT.RESULT.MESSAGES.HIGH;
-        if (score >= 4) return TEXT.RESULT.MESSAGES.MEDIUM;
-        return TEXT.RESULT.MESSAGES.LOW;
+    // Check ending condition
+    const capturedSpotIds = capturedPhotos.map(p => p.spotId).filter((id): id is string => !!id);
+    const requiredSpots = SPOTS.filter(s => s.type === 'required');
+    const isEndingConditionMet = requiredSpots.every(req => capturedSpotIds.includes(req.id));
+
+    const getPhotoInfo = (photo: Photo) => {
+        if (!photo.spotId) {
+            return {
+                title: TEXT.EPISODE.NOTHING_TITLE,
+                desc: TEXT.EPISODE.NOTHING_DESC
+            };
+        }
+        const spot = SPOTS.find(s => s.id === photo.spotId);
+        if (spot) {
+            // Accessing dynamic keys. Ensure TEXT.EPISODE matches keys in constants.ts
+            const ep = TEXT.EPISODE as any;
+            return {
+                title: ep[spot.titleKey],
+                desc: ep[spot.descKey]
+            };
+        }
+        return { title: "Error", desc: "Unknown spot" };
     };
 
     return (
@@ -101,20 +114,34 @@ export default function GamePage() {
             {phase === 'result' && (
                 <div className={styles.resultOverlay}>
                     <div className={styles.resultContent}>
-                        <h2>{TEXT.RESULT.TITLE}</h2>
+                        <h2>{isEndingConditionMet ? TEXT.RESULT.TITLE : "記憶の断片"}</h2>
+
                         <div className={styles.resultPhotos}>
-                            {capturedPhotos.map((photo, index) => (
-                                <div key={photo.id} className={styles.photoCard}>
-                                    <img src={photo.url} alt={`Capture ${index + 1}`} />
-                                </div>
-                            ))}
+                            {capturedPhotos.map((photo, index) => {
+                                const info = getPhotoInfo(photo);
+                                return (
+                                    <div key={photo.id} className={styles.photoCard}>
+                                        <div className={styles.photoFrame}>
+                                            <img src={photo.url} alt={`Capture ${index + 1}`} />
+                                        </div>
+                                        <div className={styles.photoText}>
+                                            <h3>{info.title}</h3>
+                                            <p>{info.desc}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         <div className={styles.totalScore}>
-                            <p className={styles.resultMessage}>{getResultMessage(totalScore)}</p>
+                            {isEndingConditionMet ? (
+                                <p className={styles.resultMessage}>{TEXT.ENDING.SUBTITLE}</p>
+                            ) : (
+                                <p className={styles.resultMessage}>まだ足りない記憶があるようだ...</p>
+                            )}
                         </div>
 
-                        {totalScore >= 6 ? (
+                        {isEndingConditionMet ? (
                             <button
                                 className={`${styles.resetButton} ${styles.endingButton}`}
                                 onClick={() => setPhase('ending')}

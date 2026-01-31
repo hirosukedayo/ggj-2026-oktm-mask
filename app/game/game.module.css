@@ -149,29 +149,49 @@
 
 .photoCard {
     background: #000;
-    padding: 10px;
+    padding: 0;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     width: 320px;
-    /* Wider to accommodate 1.5:1 aspect ratio */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.photoCard img {
+.photoFrame {
+    width: 100%;
+    background: #111;
+    padding: 10px;
+    /* Aspect ratio mainly controlled by content or explicit height if needed */
+}
+
+.photoFrame img {
     width: 100%;
     height: auto;
-    /* Allow height to adjust */
     object-fit: contain;
     border-radius: 4px;
-    margin-bottom: 8px;
     display: block;
 }
 
-.photoCard p {
-    font-size: 1.2rem;
-    font-weight: bold;
+.photoText {
+    padding: 16px;
+    text-align: left;
+    background: #1a1a1a;
+    flex-grow: 1;
+}
+
+.photoText h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
     color: #ffd700;
-    /* Gold */
+    /* Gold for title */
+}
+
+.photoText p {
+    font-size: 0.9rem;
+    color: #ccc;
     margin: 0;
+    line-height: 1.5;
 }
 
 .totalScore {
