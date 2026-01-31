@@ -1,0 +1,83 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 0%, #000 0%);
+    animation: eyeOpen 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes eyeOpen {
+    0% {
+        background: radial-gradient(ellipse at center, transparent 0%, #000 0%);
+    }
+
+    /* Add a slight pause/slow start to simulate heavy Eyelids? Or just smooth curve. */
+    /* Keyframes for gradients are tricky in standard CSS without Houdini or lots of steps. 
+       However, browers often don't animate gradients smoothly between two keyframes if declared fully like this.
+       
+       Better approach: Use a CSS variable or a massive pseudo-element scale.
+       Let's try the scaling masked element approach or just use clip-path if we accept a hard edge (or slight SVG blur).
+       
+       Actually, a simple way for smooth gradient animation is masking.
+       Let's use a black div and mask it with a radial gradient that expands.
+    */
+}
+
+/* Re-thinking for smooth animation:
+   Use a black container.
+   Use a mask-image that is an ellipse.
+   Animate the mask-size or a custom property.
+   
+   Actually, easiest pure CSS for "opening visuals" is often:
+   Div with wide borders? No.
+   
+   Let's stick to the CLIP-PATH approach but INVERTED.
+   We want to show the underlying game through the hole.
+   So we need an overlay that HAS a hole.
+   
+   SVG Mask is best for this.
+   Or... `box-shadow` with huge spread.
+*/
+
+.overlayWithShadow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    /* Base width */
+    height: 0;
+    /* Start closed (height 0) */
+    box-shadow: 0 0 0 100vmax #000;
+    /* Huge shadow covers screen */
+    border-radius: 50%;
+    /* Make it an ellipse */
+    z-index: 9999;
+    pointer-events: none;
+
+    /* We want to expand the WIDTH and HEIGHT of this "hole" (which is the element itself) */
+    /* But the element itself is transparent, its SHADOW is black */
+    background: transparent;
+
+    animation: openEyes 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes openEyes {
+    0% {
+        width: 100vw;
+        height: 0;
+        box-shadow: 0 0 40px 100vmax #000;
+        /* Slight blur at start */
+    }
+
+    100% {
+        width: 150vw;
+        height: 150vh;
+        box-shadow: 0 0 100px 100vmax #000;
+        /* Blur edges as it opens */
+    }
+}
