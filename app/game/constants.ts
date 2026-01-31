@@ -14,7 +14,7 @@ export interface Spot {
 export const SPOTS: Spot[] = [
     // 答え (Answer)
     { id: 'spot_a', x: 900, y: 270, radius: 80, type: 'answer', titleKey: 'SPOT_A_TITLE', descKey: 'SPOT_A_DESC' },
-    { id: 'spot_b', x: 100, y: 450, radius: 80, type: 'answer', titleKey: 'SPOT_B_TITLE', descKey: 'SPOT_B_DESC' },
+    { id: 'spot_b', x: 140, y: 430, radius: 80, type: 'answer', titleKey: 'SPOT_B_TITLE', descKey: 'SPOT_B_DESC' },
 
     // 事件スポット (Incident)
     { id: 'murder', x: 583.5, y: 273, radius: 60, type: 'incident', titleKey: 'SPOT_MURDER_TITLE', descKey: 'SPOT_MURDER_DESC' },
