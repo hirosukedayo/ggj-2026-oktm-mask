@@ -9,7 +9,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { EyeOpenTransition } from "@/components/EyeOpenTransition/EyeOpenTransition";
 import { SPOTS, Spot } from "./constants";
-import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
+import { SCENARIO_BGM_VOLUME, MAIN_BGM_VOLUME } from "@/utils/audioConfig";
 
 interface Photo {
     id: number;
@@ -21,7 +21,7 @@ interface Photo {
 
 type GamePhase = 'capturing' | 'result' | 'ending';
 
-export default function AshidaScenarioPage() {
+export default function GamePage() {
     const router = useRouter();
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
@@ -33,25 +33,31 @@ export default function AshidaScenarioPage() {
         // @ts-expect-error
         const hasStarted = typeof window !== 'undefined' && window.oktmGameStartedA;
 
+        // In development (Strict Mode), effects run twice.
+        // Window variable stays set during soft navs and double-effects.
+        // But on reload, window is cleared, so hasStarted will be false.
         if (!hasStarted) {
-            router.replace('/?unlock=y,e');
+            router.replace('/');
         }
     }, [router]);
 
-    // Ending BGM
-    React.useEffect(() => {
-        if (phase !== 'ending') return;
+    // Main BGM (Capturing -> Result -> Ending)
+    const mainBgmRef = React.useRef<HTMLAudioElement | null>(null);
 
-        const audio = new Audio('/sounds/scenario_txt_bgm.mp3');
+    React.useEffect(() => {
+        // Initialize and play BGM on mount
+        const audio = new Audio('/sounds/bgm.mp3');
         audio.loop = true;
-        audio.volume = SCENARIO_BGM_VOLUME;
-        audio.play().catch(e => console.log("Ending BGM autoplay blocked:", e));
+        audio.volume = MAIN_BGM_VOLUME;
+        mainBgmRef.current = audio;
+
+        audio.play().catch(e => console.log("Main BGM autoplay blocked:", e));
 
         return () => {
             audio.pause();
             audio.currentTime = 0;
         };
-    }, [phase]);
+    }, []);
 
     const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
     const [showResultSummary, setShowResultSummary] = useState(false);
@@ -106,26 +112,26 @@ export default function AshidaScenarioPage() {
 
         let scenario: TextSegment[] = [];
 
-        // Condition 1: True Ending (Both Answer Spots Captured - 芦田 + 遠藤)
+        // Condition 1: True Ending (Both Answer Spots Captured)
         const hasSpotA = capturedSpotIds.includes('spot_a');
         const hasSpotB = capturedSpotIds.includes('spot_b');
 
         if (hasSpotA && hasSpotB) {
             scenario = text.RESULT_A.SCENARIO_ENDING[0];
         } else {
-            // Condition 2: Incident Spots
-            const incidentId = capturedSpotIds.find(id => ['miura', 'wildfire', 'yasuzaki'].includes(id));
+            // Condition 2: Incident Spots (Priority if no ending)
+            const incidentId = capturedSpotIds.find(id => ['murder', 'bicycle', 'wildfire'].includes(id));
 
             if (incidentId) {
                 switch (incidentId) {
-                    case 'miura':
-                        scenario = text.RESULT_A.SCENARIO_MIURA[0];
+                    case 'murder':
+                        scenario = text.RESULT_A.SCENARIO_MURDER[0];
+                        break;
+                    case 'bicycle':
+                        scenario = text.RESULT_A.SCENARIO_BICYCLE[0];
                         break;
                     case 'wildfire':
                         scenario = text.RESULT_A.SCENARIO_WILDFIRE[0];
-                        break;
-                    case 'yasuzaki':
-                        scenario = text.RESULT_A.SCENARIO_YASUZAKI[0];
                         break;
                     default:
                         scenario = text.RESULT_A.SCENARIO_A[0];
@@ -139,18 +145,21 @@ export default function AshidaScenarioPage() {
         }
 
         setResultScenario(scenario);
-        setShowResultSummary(false);
+        setShowResultSummary(false); // Reset summary state
     };
 
     const handleReset = () => {
         setCapturedPhotos([]);
         setPhase('capturing');
         setShowResultSummary(false);
-        setShowTransition(true);
+        setShowTransition(true); // Trigger transition again
     };
 
     const revealedAreas = capturedPhotos.map(p => ({ x: p.x, y: p.y }));
 
+    // Check ending condition for button display logic
+    // We can reuse the same logic or just check if the scenario is the Ending scenario
+    // But relying on scenario text might be brittle, so checking spots is safer.
     const capturedSpotIds = capturedPhotos.map(p => p.spotId).filter((id): id is string => !!id);
     const isEndingConditionMet = capturedSpotIds.includes('spot_a') && capturedSpotIds.includes('spot_b');
 
@@ -163,6 +172,7 @@ export default function AshidaScenarioPage() {
         }
         const spot = SPOTS.find(s => s.id === photo.spotId);
         if (spot) {
+            // Accessing dynamic keys.
             const ep = text.EPISODE_A as Record<string, string>;
             return {
                 title: ep[spot.titleKey],
@@ -226,6 +236,8 @@ export default function AshidaScenarioPage() {
 
                         {showResultSummary && (
                             <div className={styles.actionButtons}>
+
+
                                 {isEndingConditionMet ? (
                                     <button
                                         className={`${styles.resetButton} ${styles.endingButton}`}
@@ -252,7 +264,7 @@ export default function AshidaScenarioPage() {
                         <p className={styles.endingDescription}>{text.ENDING_A.DESCRIPTION}</p>
                         <p className={styles.credits}>{text.ENDING_A.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=y,e,a')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e')} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>

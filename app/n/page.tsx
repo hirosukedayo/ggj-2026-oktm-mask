@@ -9,7 +9,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { EyeOpenTransition } from "@/components/EyeOpenTransition/EyeOpenTransition";
 import { SPOTS, Spot } from "./constants";
-import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
+import { SCENARIO_BGM_VOLUME, MAIN_BGM_VOLUME } from "@/utils/audioConfig";
 
 interface Photo {
     id: number;
@@ -31,27 +31,29 @@ export default function MeijoScenarioPage() {
     // Route guard: Redirect to title if not started via prologue
     React.useEffect(() => {
         // @ts-expect-error
-        const hasStarted = typeof window !== 'undefined' && window.oktmGameStartedM;
+        const hasStarted = typeof window !== 'undefined' && window.oktmGameStartedN;
 
         if (!hasStarted) {
             router.replace('/?unlock=y,e,a');
         }
     }, [router]);
 
-    // Ending BGM
-    React.useEffect(() => {
-        if (phase !== 'ending') return;
+    // Main BGM (Capturing -> Result -> Ending)
+    const mainBgmRef = React.useRef<HTMLAudioElement | null>(null);
 
-        const audio = new Audio('/sounds/scenario_txt_bgm.mp3');
+    React.useEffect(() => {
+        const audio = new Audio('/sounds/bgm.mp3');
         audio.loop = true;
-        audio.volume = SCENARIO_BGM_VOLUME;
-        audio.play().catch(e => console.log("Ending BGM autoplay blocked:", e));
+        audio.volume = MAIN_BGM_VOLUME;
+        mainBgmRef.current = audio;
+
+        audio.play().catch(e => console.log("Main BGM autoplay blocked:", e));
 
         return () => {
             audio.pause();
             audio.currentTime = 0;
         };
-    }, [phase]);
+    }, []);
 
     const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
     const [showResultSummary, setShowResultSummary] = useState(false);
@@ -111,28 +113,28 @@ export default function MeijoScenarioPage() {
         const hasSpotB = capturedSpotIds.includes('spot_b');
 
         if (hasSpotA && hasSpotB) {
-            scenario = text.RESULT_M.SCENARIO_ENDING[0];
+            scenario = text.RESULT_N.SCENARIO_ENDING[0];
         } else {
             // Condition 2: Incident Spots
-            const incidentId = capturedSpotIds.find(id => ['murder', 'yasuzaki', 'endo'].includes(id));
+            const incidentId = capturedSpotIds.find(id => ['murder', 'anzaki', 'endo'].includes(id));
 
             if (incidentId) {
                 switch (incidentId) {
                     case 'murder':
-                        scenario = text.RESULT_M.SCENARIO_MURDER[0];
+                        scenario = text.RESULT_N.SCENARIO_MURDER[0];
                         break;
-                    case 'yasuzaki':
-                        scenario = text.RESULT_M.SCENARIO_YASUZAKI[0];
+                    case 'anzaki':
+                        scenario = text.RESULT_N.SCENARIO_ANZAKI[0];
                         break;
                     case 'endo':
-                        scenario = text.RESULT_M.SCENARIO_ENDO[0];
+                        scenario = text.RESULT_N.SCENARIO_ENDO[0];
                         break;
                     default:
-                        scenario = text.RESULT_M.SCENARIO_A[0];
+                        scenario = text.RESULT_N.SCENARIO_A[0];
                 }
             } else {
                 // Condition 3: Failure / Random
-                const patterns = text.RESULT_M.SCENARIO_A;
+                const patterns = text.RESULT_N.SCENARIO_A;
                 const randomIndex = Math.floor(Math.random() * patterns.length);
                 scenario = patterns[randomIndex];
             }
@@ -157,13 +159,13 @@ export default function MeijoScenarioPage() {
     const getPhotoInfo = (photo: Photo) => {
         if (!photo.spotId) {
             return {
-                title: text.EPISODE_M.NOTHING_TITLE,
-                desc: text.EPISODE_M.NOTHING_DESC
+                title: text.EPISODE_N.NOTHING_TITLE,
+                desc: text.EPISODE_N.NOTHING_DESC
             };
         }
         const spot = SPOTS.find(s => s.id === photo.spotId);
         if (spot) {
-            const ep = text.EPISODE_M as Record<string, string>;
+            const ep = text.EPISODE_N as Record<string, string>;
             return {
                 title: ep[spot.titleKey],
                 desc: ep[spot.descKey]
@@ -248,11 +250,11 @@ export default function MeijoScenarioPage() {
             {phase === 'ending' && (
                 <div className={styles.endingOverlay}>
                     <div className={styles.endingContent}>
-                        <h1 className={styles.endingTitle}>{text.ENDING_M.TITLE}</h1>
-                        <p className={styles.endingDescription}>{text.ENDING_M.DESCRIPTION}</p>
-                        <p className={styles.credits}>{text.ENDING_M.CREDITS}</p>
+                        <h1 className={styles.endingTitle}>{text.ENDING_N.TITLE}</h1>
+                        <p className={styles.endingDescription}>{text.ENDING_N.DESCRIPTION}</p>
+                        <p className={styles.credits}>{text.ENDING_N.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=y,e,a,m')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2,n,x')} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>

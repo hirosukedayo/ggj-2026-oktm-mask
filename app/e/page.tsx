@@ -9,7 +9,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { EyeOpenTransition } from "@/components/EyeOpenTransition/EyeOpenTransition";
 import { SPOTS, Spot } from "./constants";
-import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
+import { SCENARIO_BGM_VOLUME, MAIN_BGM_VOLUME } from "@/utils/audioConfig";
 
 interface Photo {
     id: number;
@@ -38,20 +38,22 @@ export default function EndoScenarioPage() {
         }
     }, [router]);
 
-    // Ending BGM
-    React.useEffect(() => {
-        if (phase !== 'ending') return;
+    // Main BGM (Capturing -> Result -> Ending)
+    const mainBgmRef = React.useRef<HTMLAudioElement | null>(null);
 
-        const audio = new Audio('/sounds/scenario_txt_bgm.mp3');
+    React.useEffect(() => {
+        const audio = new Audio('/sounds/bgm.mp3');
         audio.loop = true;
-        audio.volume = SCENARIO_BGM_VOLUME;
-        audio.play().catch(e => console.log("Ending BGM autoplay blocked:", e));
+        audio.volume = MAIN_BGM_VOLUME;
+        mainBgmRef.current = audio;
+
+        audio.play().catch(e => console.log("Main BGM autoplay blocked:", e));
 
         return () => {
             audio.pause();
             audio.currentTime = 0;
         };
-    }, [phase]);
+    }, []);
 
     const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
     const [showResultSummary, setShowResultSummary] = useState(false);
@@ -114,12 +116,12 @@ export default function EndoScenarioPage() {
             scenario = text.RESULT_E.SCENARIO_ENDING[0];
         } else {
             // Condition 2: Incident Spots
-            const incidentId = capturedSpotIds.find(id => ['yasuzaki', 'ashida', 'wildfire'].includes(id));
+            const incidentId = capturedSpotIds.find(id => ['anzaki', 'ashida', 'wildfire'].includes(id));
 
             if (incidentId) {
                 switch (incidentId) {
-                    case 'yasuzaki':
-                        scenario = text.RESULT_E.SCENARIO_YASUZAKI[0];
+                    case 'anzaki':
+                        scenario = text.RESULT_E.SCENARIO_ANZAKI[0];
                         break;
                     case 'ashida':
                         scenario = text.RESULT_E.SCENARIO_ASHIDA[0];
@@ -252,7 +254,7 @@ export default function EndoScenarioPage() {
                         <p className={styles.endingDescription}>{text.ENDING_E.DESCRIPTION}</p>
                         <p className={styles.credits}>{text.ENDING_E.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=y,e')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2')} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>
