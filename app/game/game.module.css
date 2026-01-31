@@ -192,8 +192,8 @@
 }
 
 .resultMessage {
-    font-size: 0.95rem;
-    /* Reduced for poetic feel */
+    font-size: 1.1rem;
+    /* Unified with Prologue */
     color: #bbb;
     margin: 0 auto;
     white-space: pre-wrap;
@@ -273,7 +273,8 @@
 }
 
 .endingDescription {
-    font-size: 1.0rem;
+    font-size: 1.1rem;
+    /* Unified with Prologue */
     line-height: 2.2;
     margin-bottom: 40px;
     white-space: pre-wrap;
