@@ -23,11 +23,12 @@ export default function GamePage() {
     const [phase, setPhase] = useState<GamePhase>('capturing');
 
     // Check collision with defined spots
+    // Check collision with defined spots
     const checkSpotCollision = (x: number, y: number): string | undefined => {
-        let closestSpot: Spot | null = null;
+        let closestSpot: Spot | undefined = undefined;
         let minDistance = Infinity;
 
-        SPOTS.forEach(spot => {
+        for (const spot of SPOTS) {
             const dist = Math.sqrt(Math.pow(x - spot.x, 2) + Math.pow(y - spot.y, 2));
             if (dist <= spot.radius) {
                 if (dist < minDistance) {
@@ -35,9 +36,9 @@ export default function GamePage() {
                     closestSpot = spot;
                 }
             }
-        });
+        }
 
-        return closestSpot?.id;
+        return closestSpot ? closestSpot.id : undefined;
     };
 
     const handleCapture = (dataUrl: string, position: { x: number, y: number }) => {
