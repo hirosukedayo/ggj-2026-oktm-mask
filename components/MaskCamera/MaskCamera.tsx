@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./MaskCamera.module.css";
+import { RECALL_SOUND_VOLUME } from "@/utils/audioConfig";
 
 
 interface MaskCameraProps {
@@ -155,6 +156,7 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
 
 
     const audio = new Audio("/sounds/recall1.mp3");
+    audio.volume = RECALL_SOUND_VOLUME;
     audio.play().catch(e => console.error("Audio play failed", e));
 
     // For capture, we can just return the current view or cut out the specific oval.
