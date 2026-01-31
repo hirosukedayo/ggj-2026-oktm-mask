@@ -152,14 +152,18 @@
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    width: 320px;
+    /* Wider to accommodate 1.5:1 aspect ratio */
 }
 
 .photoCard img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+    width: 100%;
+    height: auto;
+    /* Allow height to adjust */
+    object-fit: contain;
     border-radius: 4px;
     margin-bottom: 8px;
+    display: block;
 }
 
 .photoCard p {
