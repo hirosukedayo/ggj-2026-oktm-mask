@@ -185,8 +185,14 @@ export default function GamePage() {
                         <div className={styles.resultPhotos}>
                             {capturedPhotos.map((photo, index) => {
                                 const info = getPhotoInfo(photo);
+                                const spot = SPOTS.find(s => s.id === photo.spotId);
+                                const isIncident = spot?.type === 'incident';
+
                                 return (
-                                    <div key={photo.id} className={styles.photoCard}>
+                                    <div
+                                        key={photo.id}
+                                        className={`${styles.photoCard} ${isIncident ? styles.incidentPhoto : ''}`}
+                                    >
                                         <div className={styles.photoFrame}>
                                             <img src={photo.url} alt={`Capture ${index + 1}`} />
                                         </div>

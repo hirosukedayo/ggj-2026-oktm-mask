@@ -126,7 +126,8 @@
     border: none;
     padding: 20px;
     text-align: center;
-    max-width: 1000px;
+    max-width: 1200px;
+    /* Increased from 1000px to fit 2x 480px photos + gap */
     width: 100%;
     box-shadow: none;
     transform: translateY(20px);
@@ -153,9 +154,15 @@
     /* Added for responsiveness if needed */
 }
 
-/* Stagger photos nicely */
+/* Stagger photos nicely and add floating animation */
+.resultPhotos .photoCard:nth-child(odd) {
+    animation: floatComplex1 7s ease-in-out infinite;
+}
+
 .resultPhotos .photoCard:nth-child(even) {
     margin-top: 50px;
+    animation: floatComplex2 8s ease-in-out infinite;
+    animation-delay: -3s;
 }
 
 .photoCard {
@@ -167,6 +174,57 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition: width 0.3s, transform 0.3s;
+}
+
+@keyframes floatComplex1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(6px, 2px);
+    }
+
+    45% {
+        transform: translate(2px, -8px);
+    }
+
+    70% {
+        transform: translate(-5px, -3px);
+    }
+
+    85% {
+        transform: translate(-2px, 5px);
+    }
+}
+
+@keyframes floatComplex2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-5px, -4px);
+    }
+
+    50% {
+        transform: translate(4px, 6px);
+    }
+
+    80% {
+        transform: translate(6px, -2px);
+    }
+}
+
+.incidentPhoto {
+    width: 480px;
+    /* 1.5x of 320px */
+    z-index: 10;
 }
 
 .photoFrame {
