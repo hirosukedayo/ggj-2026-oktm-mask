@@ -72,7 +72,7 @@ export default function Home() {
                 <div className={styles.buttonWrapper}>
                   <button
                     onClick={handlePrologueClick}
-                    className={`${styles.button} ${styles.fadeIn}`}
+                    className={`${styles.button} ${styles.fadeIn} ${styles.redText}`}
                   >
                     {text.PROLOGUE.BUTTON_ACTION}
                   </button>

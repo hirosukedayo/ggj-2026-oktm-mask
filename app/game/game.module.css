@@ -100,7 +100,6 @@
     margin: 0;
     font-size: 1.2rem;
     color: #ccc;
-    border-bottom: 1px solid #333;
     padding-bottom: 10px;
 }
 
@@ -113,12 +112,15 @@
     height: 100vh;
     background: #000;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    /* Changed from center to prevent shift */
     justify-content: center;
     z-index: 100;
     opacity: 0;
     animation: fadeIn 0.5s ease-out forwards;
     overflow-y: auto;
+    padding-top: 10%;
+    /* Add spacing from top */
 }
 
 .resultContent {
@@ -241,18 +243,7 @@
     display: block;
 }
 
-.totalScore {
-    margin-bottom: 40px;
-    border-top: 1px solid #333;
-    padding-top: 20px;
-}
 
-.totalScore h3 {
-    font-size: 1.8rem;
-    /* Reduced from 2.5rem */
-    margin: 0 0 10px 0;
-    color: #fff;
-}
 
 .resultMessage {
     font-size: 1.1rem;
@@ -268,7 +259,8 @@
 
 .resetButton {
     background: #fff;
-    color: #000;
+    color: #ff4444;
+    /* Changed from #000 */
     border: none;
     padding: 12px 32px;
     font-size: 1.0rem;
@@ -342,13 +334,6 @@
     line-height: 2.2;
     margin-bottom: 40px;
     white-space: pre-wrap;
-}
-
-.separator {
-    border: none;
-    border-top: 1px solid #333;
-    width: 50%;
-    margin: 40px auto;
 }
 
 .credits {

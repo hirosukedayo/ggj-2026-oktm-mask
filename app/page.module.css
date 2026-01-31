@@ -42,6 +42,10 @@
   /* Ensure Mincho is used */
 }
 
+.redText {
+  color: #ff4444;
+}
+
 .button:hover {
   opacity: 0.8;
 }
