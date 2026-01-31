@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-
-// ... imports ...
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { useLanguage } from "@/components/LanguageProvider";
+import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
 
 export default function Home() {
   const [step, setStep] = useState<'title' | 'prologue'>('title');
@@ -66,6 +65,8 @@ export default function Home() {
                 onComplete={() => setShowPrologueButton(true)}
                 finished={showPrologueButton}
                 className={showPrologueButton ? styles.textFinished : ''}
+                bgmSrc="/sounds/scenario_txt_bgm.mp3"
+                bgmVolume={SCENARIO_BGM_VOLUME}
               />
 
               {showPrologueButton && (
@@ -81,8 +82,7 @@ export default function Home() {
             </div>
           </div>
         )}
-      </main >
-    </div >
+      </main>
+    </div>
   );
 }
-

@@ -28,17 +28,21 @@ export const TEXT_JA = {
         TITLE: "記憶の復元完了",
         // Result A: Non-event related (Randomized Failure)
         SCENARIO_A: [
-            [ // Pattern 1
+            [ // A-1
                 { text: "僕は晴れた日に、\nただ歩いていただけだったんだ", type: 'protagonist' },
                 { text: "安嵜さんはこの時、\nいつもと同じ一日だと思っていたんですね。\nゆっくり思い出して大丈夫です", type: 'psychiatrist' }
             ],
-            [ // Pattern 2
+            [ // A-2
                 { text: "あの頃\n何もない町で\n何も起きないと思っていた", type: 'protagonist' },
-                { text: "安嵜さんは29歳の時、\nそう思っていたんですね", type: 'psychiatrist' }
+                { text: "安嵜さんは29歳の時、\nそう思っていたんですね\n三浦さんと共に", type: 'psychiatrist' }
             ],
-            [ // Pattern 3
+            [ // A-3
                 { text: "6月の暑い日だった\nだけどこの日\nなぜか\n僕は汗もかかなかったんだ", type: 'protagonist' },
                 { text: "安嵜さんは\nうすうす不穏なことが起きると\n思っていたのかもしれませんね", type: 'psychiatrist' }
+            ],
+            [ // A-4
+                { text: "普段は遠くの風景を見るなんて\n退屈だったが\nこの日は目を離せないことがあった", type: 'protagonist' },
+                { text: "安嵜さんが5度目に\nカウンセリングへいらっしゃったとき\nその風景の話をされていましたね", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
         // Incident Scenarios

@@ -9,6 +9,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { EyeOpenTransition } from "@/components/EyeOpenTransition/EyeOpenTransition";
 import { SPOTS, Spot } from "./constants";
+import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
 
 interface Photo {
     id: number;
@@ -39,6 +40,21 @@ export default function GamePage() {
             router.replace('/');
         }
     }, [router]);
+
+    // Ending BGM
+    React.useEffect(() => {
+        if (phase !== 'ending') return;
+
+        const audio = new Audio('/sounds/scenario_txt_bgm.mp3');
+        audio.loop = true;
+        audio.volume = SCENARIO_BGM_VOLUME;
+        audio.play().catch(e => console.log("Ending BGM autoplay blocked:", e));
+
+        return () => {
+            audio.pause();
+            audio.currentTime = 0;
+        };
+    }, [phase]);
 
     const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
     const [showResultSummary, setShowResultSummary] = useState(false);
@@ -214,6 +230,8 @@ export default function GamePage() {
                                 onComplete={() => setShowResultSummary(true)}
                                 className={showResultSummary ? styles.textFinished : ''}
                                 finished={showResultSummary}
+                                bgmSrc="/sounds/scenario_txt_bgm.mp3"
+                                bgmVolume={SCENARIO_BGM_VOLUME}
                             />
                         </div>
 
