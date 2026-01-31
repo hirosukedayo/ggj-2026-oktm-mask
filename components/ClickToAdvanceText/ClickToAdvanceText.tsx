@@ -87,7 +87,7 @@ export const ClickToAdvanceText: React.FC<ClickToAdvanceTextProps> = ({
     };
 
     return (
-        <div className={`${styles.container} ${className || ''}`}>
+        <div className={`${styles.container} ${finished ? styles.finished : ''} ${className || ''}`}>
             <div className={styles.textContainer}>
                 <div key={currentIndex} className={`${styles.segment} ${getTypeClass(currentSegment)}`} style={getStyle(currentSegment)}>
                     <FlickerText text={getText(currentSegment)} />

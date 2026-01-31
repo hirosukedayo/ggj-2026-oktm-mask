@@ -6,7 +6,7 @@ export const TEXT_JA = {
     UI: {
         RETICLE_CAPTURE: "RECALL",
         RETICLE_LIMIT: "LIMIT",
-        BUTTON_RESET: "もう一度思い出す",
+        BUTTON_RESET: "もう少し思い出してみるよ",
         BUTTON_ENDING: "全て思い出す",
         BUTTON_TITLE_BACK: "タイトルへ戻る",
     },
@@ -16,7 +16,7 @@ export const TEXT_JA = {
         BUTTON_START: "はじめる",
     },
     PROLOGUE: {
-        BUTTON_ACTION: "記憶を辿る",
+        BUTTON_ACTION: "わかった。少し待ってほしい",
         SEGMENTS: [
             { text: "声を聞かせてください。声を。", type: 'psychiatrist' },
             { text: "安嵜さん\nあなたは今から21年前……\n2005年の、あの日のことを\n思い出せてきています", type: 'psychiatrist' },

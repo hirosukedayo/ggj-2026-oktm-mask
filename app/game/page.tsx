@@ -74,7 +74,7 @@ export default function GamePage() {
             spotId
         };
 
-        const newPhotos = [newPhoto, ...capturedPhotos];
+        const newPhotos = [...capturedPhotos, newPhoto];
         setCapturedPhotos(newPhotos);
 
         // Check if we hit the limit (2 photos)
@@ -212,9 +212,7 @@ export default function GamePage() {
 
                         {showResultSummary && (
                             <div className={styles.actionButtons}>
-                                <div className={styles.totalScore}>
-                                    {/* Empty or just remove if not needed, but keeping structure for layout stability if necessary */}
-                                </div>
+
 
                                 {isEndingConditionMet ? (
                                     <button
@@ -240,7 +238,6 @@ export default function GamePage() {
                     <div className={styles.endingContent}>
                         <h1 className={styles.endingTitle}>{text.ENDING.TITLE}</h1>
                         <p className={styles.endingDescription}>{text.ENDING.DESCRIPTION}</p>
-                        <hr className={styles.separator} />
                         <p className={styles.credits}>{text.ENDING.CREDITS}</p>
 
                         <button className={styles.resetButton} onClick={() => router.push('/')} style={{ marginTop: '40px' }}>
