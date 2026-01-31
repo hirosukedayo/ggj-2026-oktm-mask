@@ -13,6 +13,8 @@ interface ClickToAdvanceTextProps {
     onComplete: () => void;
     className?: string;
     finished?: boolean;
+    bgmSrc?: string;
+    bgmVolume?: number;
 }
 
 export const ClickToAdvanceText: React.FC<ClickToAdvanceTextProps> = ({
@@ -20,10 +22,47 @@ export const ClickToAdvanceText: React.FC<ClickToAdvanceTextProps> = ({
     onComplete,
     className,
     finished = false,
+    bgmSrc,
+    bgmVolume = 0.5,
 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const audioRef = React.useRef<HTMLAudioElement | null>(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    // BGM Effect
+    useEffect(() => {
+        if (!bgmSrc) return;
+
+        const audio = new Audio(bgmSrc);
+        audio.loop = true;
+        audio.volume = bgmVolume;
+        audioRef.current = audio;
+
+        const playAudio = async () => {
+            try {
+                await audio.play();
+                setIsPlaying(true);
+            } catch (error) {
+                console.log("Auto-play prevented, waiting for interaction:", error);
+                setIsPlaying(false);
+            }
+        };
+
+        playAudio();
+
+        return () => {
+            audio.pause();
+            audio.currentTime = 0;
+            audioRef.current = null;
+        };
+    }, [bgmSrc, bgmVolume]);
 
     const advance = () => {
+        // Try to resume audio if not playing (e.g. autoplay blocked)
+        if (audioRef.current && !isPlaying && !finished) {
+            audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.log("Still blocked", e));
+        }
+
         if (finished) return;
 
         if (currentIndex < segments.length - 1) {

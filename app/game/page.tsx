@@ -9,6 +9,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { EyeOpenTransition } from "@/components/EyeOpenTransition/EyeOpenTransition";
 import { SPOTS, Spot } from "./constants";
+import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
 
 interface Photo {
     id: number;
@@ -214,6 +215,8 @@ export default function GamePage() {
                                 onComplete={() => setShowResultSummary(true)}
                                 className={showResultSummary ? styles.textFinished : ''}
                                 finished={showResultSummary}
+                                bgmSrc="/sounds/scenario_txt_bgm.mp3"
+                                bgmVolume={SCENARIO_BGM_VOLUME}
                             />
                         </div>
 
