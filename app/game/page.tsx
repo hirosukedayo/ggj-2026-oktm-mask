@@ -43,7 +43,9 @@ export default function GamePage() {
     const handleCapture = (dataUrl: string, position: { x: number, y: number }) => {
         if (phase !== 'capturing') return;
 
+        console.log("Captured at:", position);
         const spotId = checkSpotCollision(position.x, position.y);
+        console.log("Detected Spot ID:", spotId);
 
         const newPhoto: Photo = {
             id: Date.now(),

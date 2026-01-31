@@ -140,6 +140,9 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
     setIsFlashing(true);
     setTimeout(() => setIsFlashing(false), 300);
 
+    console.log("Clicked Position:", mousePos);
+
+
     const audio = new Audio("/sounds/cam1.mp3");
     audio.play().catch(e => console.error("Audio play failed", e));
 
