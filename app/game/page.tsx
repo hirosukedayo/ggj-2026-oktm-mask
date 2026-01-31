@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MaskCamera } from "@/components/MaskCamera/MaskCamera";
 import styles from "./game.module.css";
-import { TEXT } from "@/utils/locales";
+import { TEXT, TextSegment } from "@/utils/locales";
+import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { SPOTS, Spot } from "./constants";
 
 interface Photo {
@@ -22,7 +23,9 @@ export default function GamePage() {
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
 
-    // Check collision with defined spots
+    const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
+    const [showResultSummary, setShowResultSummary] = useState(false);
+
     // Check collision with defined spots
     const checkSpotCollision = (x: number, y: number): string | undefined => {
         let closestSpot: Spot | undefined = undefined;
@@ -62,14 +65,37 @@ export default function GamePage() {
         // Check if we hit the limit (2 photos)
         if (newPhotos.length >= 2) {
             setTimeout(() => {
+                prepareResult(newPhotos);
                 setPhase('result');
             }, 1000);
         }
     };
 
+    const prepareResult = (photos: Photo[]) => {
+        // Determine Result A or B
+        const hasRequiredSpot = photos.some(p => {
+            const spot = SPOTS.find(s => s.id === p.spotId);
+            return spot?.type === 'required';
+        });
+
+        let scenario: TextSegment[] = [];
+        if (hasRequiredSpot) {
+            // Result B
+            scenario = TEXT.RESULT.SCENARIO_B[0]; // Only 1 pattern for now
+        } else {
+            // Result A (Random)
+            const patterns = TEXT.RESULT.SCENARIO_A;
+            const randomIndex = Math.floor(Math.random() * patterns.length);
+            scenario = patterns[randomIndex];
+        }
+        setResultScenario(scenario);
+        setShowResultSummary(false); // Reset summary state
+    };
+
     const handleReset = () => {
         setCapturedPhotos([]);
         setPhase('capturing');
+        setShowResultSummary(false);
     };
 
     const revealedAreas = capturedPhotos.map(p => ({ x: p.x, y: p.y }));
@@ -114,7 +140,7 @@ export default function GamePage() {
             </main>
 
             {/* Result Overlay */}
-            {phase === 'result' && (
+            {(phase === 'result' || phase === 'ending') && (
                 <div className={styles.resultOverlay}>
                     <div className={styles.resultContent}>
                         <h2>{isEndingConditionMet ? TEXT.RESULT.TITLE : "記憶の断片"}</h2>
@@ -136,25 +162,36 @@ export default function GamePage() {
                             })}
                         </div>
 
-                        <div className={styles.totalScore}>
-                            {isEndingConditionMet ? (
-                                <p className={styles.resultMessage}>{TEXT.ENDING.SUBTITLE}</p>
-                            ) : (
-                                <p className={styles.resultMessage}>まだ足りない記憶があるようだ...</p>
-                            )}
+                        <div className={styles.conversationContainer}>
+                            <ClickToAdvanceText
+                                segments={resultScenario}
+                                onComplete={() => setShowResultSummary(true)}
+                                className={showResultSummary ? styles.textFinished : ''}
+                                finished={showResultSummary}
+                            />
                         </div>
 
-                        {isEndingConditionMet ? (
-                            <button
-                                className={`${styles.resetButton} ${styles.endingButton}`}
-                                onClick={() => setPhase('ending')}
-                            >
-                                {TEXT.UI.BUTTON_ENDING}
-                            </button>
-                        ) : (
-                            <button className={styles.resetButton} onClick={handleReset}>
-                                {TEXT.UI.BUTTON_RESET}
-                            </button>
+                        {showResultSummary && (
+                            <div className={styles.actionButtons}>
+                                <div className={styles.totalScore}>
+                                    {isEndingConditionMet ? null : (
+                                        <p className={styles.resultMessage}>まだ足りない記憶があるようだ...</p>
+                                    )}
+                                </div>
+
+                                {isEndingConditionMet ? (
+                                    <button
+                                        className={`${styles.resetButton} ${styles.endingButton}`}
+                                        onClick={() => setPhase('ending')}
+                                    >
+                                        {TEXT.UI.BUTTON_ENDING}
+                                    </button>
+                                ) : (
+                                    <button className={styles.resetButton} onClick={handleReset}>
+                                        {TEXT.UI.BUTTON_RESET}
+                                    </button>
+                                )}
+                            </div>
                         )}
                     </div>
                 </div>
@@ -165,7 +202,6 @@ export default function GamePage() {
                 <div className={styles.endingOverlay}>
                     <div className={styles.endingContent}>
                         <h1 className={styles.endingTitle}>{TEXT.ENDING.TITLE}</h1>
-                        <h2 className={styles.endingSubtitle}>{TEXT.ENDING.SUBTITLE}</h2>
                         <p className={styles.endingDescription}>{TEXT.ENDING.DESCRIPTION}</p>
                         <hr className={styles.separator} />
                         <p className={styles.credits}>{TEXT.ENDING.CREDITS}</p>

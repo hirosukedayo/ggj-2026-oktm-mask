@@ -1,0 +1,35 @@
+# Text Display Enhancements
+
+- [x] Create `ClickToAdvanceText` component <!-- id: 1 -->
+    - [x] Support array of text segments
+    - [x] Support custom styles per segment (color, speaker)
+    - [x] Click handler to advance index
+    - [x] Completion callback
+    - [x] Support randomized selection (for Result A)
+- [x] Update `app/page.tsx` (Prologue) <!-- id: 2 -->
+    - [x] Use `ClickToAdvanceText`
+    - [x] Implement split text logic
+    - [x] Keep last text visible when button appears (User Request)
+- [x] Identify and Update Result Scene <!-- id: 3 -->
+    - [x] Locate Result scene file
+    - [x] Implement conversation style (Red/White text)
+    - [x] Implement Result A (Random 1-3) logic
+    - [x] Implement Result B placeholder logic
+- [x] Refine Result Scene Layout (User Request) <!-- id: 6 -->
+    - [x] Show photos during conversation
+    - [x] Keep last text visible after completion
+    - [x] Show buttons only after conversation completes
+- [x] Refine Result Scene Aesthetics (User Request) <!-- id: 7 -->
+    - [x] Remove modal styling (borders, background box)
+    - [x] Make background full dark/black
+    - [x] Ensure content is centered and immersive
+- [x] Implement Click Anywhere to Advance <!-- id: 8 -->
+    - [x] Update `ClickToAdvanceText` to use global listener
+    - [x] Add `finished` prop to control listener
+    - [x] Update `GamePage` usage
+- [x] Identify and Update Ending Scene <!-- id: 4 -->
+    - [x] Locate Ending scene file
+    - [x] Implement flexible text display (Covered by Result Flow and existing implementation)
+    - [x] Remove Subtitle from Ending Screen (User Request)
+    - [x] Smooth Transition from Result to Ending (User Request)
+- [ ] Verify changes <!-- id: 5 -->
