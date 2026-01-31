@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './ClickToAdvanceText.module.css';
 import { FlickerText } from '../FlickerText/FlickerText';
+import { FLICKER_SOUND_VOLUME, FLICKER_SOUND_DURATION } from '@/utils/audioConfig';
 
 export type TextSegment = {
     text: string;
@@ -13,8 +14,7 @@ interface ClickToAdvanceTextProps {
     onComplete: () => void;
     className?: string;
     finished?: boolean;
-    bgmSrc?: string;
-    bgmVolume?: number;
+    flickerSoundSrc?: string;
 }
 
 export const ClickToAdvanceText: React.FC<ClickToAdvanceTextProps> = ({
@@ -22,47 +22,60 @@ export const ClickToAdvanceText: React.FC<ClickToAdvanceTextProps> = ({
     onComplete,
     className,
     finished = false,
-    bgmSrc,
-    bgmVolume = 0.5,
+    flickerSoundSrc,
 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const audioRef = React.useRef<HTMLAudioElement | null>(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const flickerAudioRef = useRef<HTMLAudioElement | null>(null);
+    const fadeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    // BGM Effect
+    // Flicker sound effect - play when segment changes
     useEffect(() => {
-        if (!bgmSrc) return;
+        if (!flickerSoundSrc) return;
 
-        const audio = new Audio(bgmSrc);
-        audio.loop = true;
-        audio.volume = bgmVolume;
-        audioRef.current = audio;
-
-        const playAudio = async () => {
-            try {
-                await audio.play();
-                setIsPlaying(true);
-            } catch (error) {
-                console.log("Auto-play prevented, waiting for interaction:", error);
-                setIsPlaying(false);
-            }
-        };
-
-        playAudio();
-
-        return () => {
-            audio.pause();
-            audio.currentTime = 0;
-            audioRef.current = null;
-        };
-    }, [bgmSrc, bgmVolume]);
-
-    const advance = () => {
-        // Try to resume audio if not playing (e.g. autoplay blocked)
-        if (audioRef.current && !isPlaying && !finished) {
-            audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.log("Still blocked", e));
+        // Clean up previous audio and timeout
+        if (fadeTimeoutRef.current) {
+            clearTimeout(fadeTimeoutRef.current);
+        }
+        if (flickerAudioRef.current) {
+            flickerAudioRef.current.pause();
+            flickerAudioRef.current = null;
         }
 
+        const audio = new Audio(flickerSoundSrc);
+        audio.volume = FLICKER_SOUND_VOLUME;
+        flickerAudioRef.current = audio;
+
+        audio.play().catch(e => console.log("Flicker sound autoplay blocked:", e));
+
+        // Fade out after animation duration
+        fadeTimeoutRef.current = setTimeout(() => {
+            if (flickerAudioRef.current) {
+                // Quick fade out
+                const fadeOut = () => {
+                    if (flickerAudioRef.current && flickerAudioRef.current.volume > 0.05) {
+                        flickerAudioRef.current.volume = Math.max(0, flickerAudioRef.current.volume - 0.05);
+                        requestAnimationFrame(fadeOut);
+                    } else if (flickerAudioRef.current) {
+                        flickerAudioRef.current.pause();
+                        flickerAudioRef.current = null;
+                    }
+                };
+                fadeOut();
+            }
+        }, FLICKER_SOUND_DURATION);
+
+        return () => {
+            if (fadeTimeoutRef.current) {
+                clearTimeout(fadeTimeoutRef.current);
+            }
+            if (flickerAudioRef.current) {
+                flickerAudioRef.current.pause();
+                flickerAudioRef.current = null;
+            }
+        };
+    }, [currentIndex, flickerSoundSrc]);
+
+    const advance = () => {
         if (finished) return;
 
         if (currentIndex < segments.length - 1) {
