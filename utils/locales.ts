@@ -10,7 +10,8 @@ export const TEXT = {
         RETICLE_CAPTURE: "RECALL",
         RETICLE_LIMIT: "LIMIT",
         BUTTON_RESET: "もう一度思い出す",
-        BUTTON_ENDING: "真実の記憶へ",
+        BUTTON_ENDING: "全て思い出す",
+        BUTTON_TITLE_BACK: "タイトルへ戻る",
     },
     TITLE_SCREEN: {
         TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件追憶",
@@ -70,7 +71,7 @@ export const TEXT = {
         NOTHING_DESC: "何も思い出せなかった..."
     },
     ENDING: {
-        TITLE: "THE TRUTH",
+        TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件追憶",
         DESCRIPTION: "全ての記憶が繋がり、真実が明らかになった。\n\n6月13日のあの暴動は、偶然ではなく仕組まれたものだったのだ。\nカメラに残された微かな光が、闇に葬られた真実を照らし出す。",
         CREDITS: "Thank you for playing.",
     }

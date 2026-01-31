@@ -154,7 +154,7 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
     console.log("Clicked Position:", mousePos);
 
 
-    const audio = new Audio("/sounds/cam1.mp3");
+    const audio = new Audio("/sounds/recall1.mp3");
     audio.play().catch(e => console.error("Audio play failed", e));
 
     // For capture, we can just return the current view or cut out the specific oval.

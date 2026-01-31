@@ -20,26 +20,25 @@
 }
 
 .segment {
-    font-size: 1.5rem;
-    line-height: 1.8;
+    font-size: 1.1rem;
+    /* Smaller for poetic feel */
+    line-height: 2.0;
+    /* Increased line height */
     margin-bottom: 2rem;
     opacity: 0;
     animation: fadeIn 0.8s ease-out forwards;
     white-space: pre-wrap;
+    letter-spacing: 0.1em;
 }
 
 .protagonist {
     color: #ff4444;
-    /* Red for Main Character */
-    font-family: var(--font-geist-mono, monospace);
     font-weight: 500;
 }
 
 .psychiatrist {
     color: #ffffff;
-    /* White for Psychiatrist */
-    font-family: var(--font-geist-sans, sans-serif);
-    font-style: italic;
+    font-style: normal;
 }
 
 .narrator {

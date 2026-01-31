@@ -92,9 +92,11 @@ export const ClickToAdvanceText: React.FC<ClickToAdvanceTextProps> = ({
                     {getText(currentSegment)}
                 </div>
             </div>
-            <div className={styles.instruction}>
-                Click anywhere to continue
-            </div>
+            {!finished && (
+                <div className={styles.instruction}>
+                    Click anywhere to continue
+                </div>
+            )}
         </div>
     );
 };

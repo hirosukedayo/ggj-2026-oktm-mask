@@ -23,6 +23,19 @@ export default function GamePage() {
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
 
+    // Route guard: Redirect to title if not started via prologue
+    React.useEffect(() => {
+        // @ts-ignore
+        const hasStarted = typeof window !== 'undefined' && window.oktmGameStarted;
+
+        // In development (Strict Mode), effects run twice.
+        // Window variable stays set during soft navs and double-effects.
+        // But on reload, window is cleared, so hasStarted will be false.
+        if (!hasStarted) {
+            router.replace('/');
+        }
+    }, [router]);
+
     const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
     const [showResultSummary, setShowResultSummary] = useState(false);
 
@@ -129,7 +142,7 @@ export default function GamePage() {
             {/* Main Game Area */}
             <main className={styles.mainArea}>
                 <MaskCamera
-                    imageSrc="/images/Okutama_Bteam_mock.png"
+                    imageSrc="/images/Okutama_Bteam_mock2.png"
                     width={960}
                     height={540}
                     maskRadius={100}
@@ -153,10 +166,6 @@ export default function GamePage() {
                                         <div className={styles.photoFrame}>
                                             <img src={photo.url} alt={`Capture ${index + 1}`} />
                                         </div>
-                                        <div className={styles.photoText}>
-                                            <h3>{info.title}</h3>
-                                            <p>{info.desc}</p>
-                                        </div>
                                     </div>
                                 );
                             })}
@@ -174,9 +183,7 @@ export default function GamePage() {
                         {showResultSummary && (
                             <div className={styles.actionButtons}>
                                 <div className={styles.totalScore}>
-                                    {isEndingConditionMet ? null : (
-                                        <p className={styles.resultMessage}>まだ足りない記憶があるようだ...</p>
-                                    )}
+                                    {/* Empty or just remove if not needed, but keeping structure for layout stability if necessary */}
                                 </div>
 
                                 {isEndingConditionMet ? (
@@ -207,7 +214,7 @@ export default function GamePage() {
                         <p className={styles.credits}>{TEXT.ENDING.CREDITS}</p>
 
                         <button className={styles.resetButton} onClick={() => router.push('/')} style={{ marginTop: '40px' }}>
-                            Title
+                            {TEXT.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>
                 </div>

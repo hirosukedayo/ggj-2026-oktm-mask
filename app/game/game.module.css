@@ -137,7 +137,8 @@
 }
 
 .resultContent h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    /* Reduced from 2rem */
     margin-bottom: 30px;
     color: #fff;
     letter-spacing: 0.1em;
@@ -148,6 +149,8 @@
     justify-content: center;
     gap: 20px;
     margin-bottom: 30px;
+    flex-wrap: wrap;
+    /* Added for responsiveness if needed */
 }
 
 .photoCard {
@@ -175,27 +178,6 @@
     display: block;
 }
 
-.photoText {
-    padding: 16px;
-    text-align: left;
-    background: transparent;
-    flex-grow: 1;
-}
-
-.photoText h3 {
-    margin: 0 0 8px 0;
-    font-size: 1.1rem;
-    color: #ffd700;
-    /* Gold for title */
-}
-
-.photoText p {
-    font-size: 0.9rem;
-    color: #ccc;
-    margin: 0;
-    line-height: 1.5;
-}
-
 .totalScore {
     margin-bottom: 40px;
     border-top: 1px solid #333;
@@ -203,19 +185,22 @@
 }
 
 .totalScore h3 {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+    /* Reduced from 2.5rem */
     margin: 0 0 10px 0;
     color: #fff;
 }
 
 .resultMessage {
     font-size: 1.1rem;
+    /* Unified with Prologue */
     color: #bbb;
     margin: 0 auto;
     white-space: pre-wrap;
     text-align: left;
     max-width: 600px;
-    line-height: 1.6;
+    line-height: 2.0;
+    /* Increased line height */
 }
 
 .resetButton {
@@ -223,11 +208,14 @@
     color: #000;
     border: none;
     padding: 12px 32px;
-    font-size: 1.1rem;
+    font-size: 1.0rem;
+    /* Slightly reduced */
     font-weight: bold;
     border-radius: 30px;
     cursor: pointer;
     transition: transform 0.2s, background 0.2s;
+    font-family: inherit;
+    /* Inherit Mincho */
 }
 
 .resetButton:hover {
@@ -275,18 +263,20 @@
     animation: slideUp 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+
 .endingTitle {
-    font-size: 3rem;
+    font-size: 2.2rem;
+    /* Reduced from 3rem */
     letter-spacing: 0.2em;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    white-space: pre-wrap;
 }
-
-
 
 .endingDescription {
     font-size: 1.1rem;
-    line-height: 2;
+    /* Unified with Prologue */
+    line-height: 2.2;
     margin-bottom: 40px;
     white-space: pre-wrap;
 }
