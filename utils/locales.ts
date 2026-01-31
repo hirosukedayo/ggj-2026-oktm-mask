@@ -14,8 +14,8 @@ export const TEXT = {
     },
     TITLE_SCREEN: {
         TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件追憶",
-        DESCRIPTION: "Okutama Game Jam 2026 - Team B",
-        BUTTON_START: "Start",
+        DESCRIPTION: "Global Game Jam @ Okutama - Team B",
+        BUTTON_START: "はじめる",
     },
     PROLOGUE: {
         BUTTON_ACTION: "記憶を辿る",
