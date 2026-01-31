@@ -224,24 +224,6 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
       <canvas ref={canvasRef} width={width} height={height} style={{ display: 'block' }} />
 
       {isFlashing && <div className={styles.flashOverlay} />}
-
-      {/* Reticle Overlay */}
-      {!disabled && (
-        <div
-          className={styles.reticle}
-          style={{
-            left: mousePos.x,
-            top: mousePos.y,
-            position: 'absolute',
-            transform: 'translate(-50%, -50%)',
-            pointerEvents: 'none'
-          }}
-        >
-          <div className={styles.reticleLabel}>
-            {TEXT.UI.RETICLE_CAPTURE}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

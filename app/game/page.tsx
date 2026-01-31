@@ -85,22 +85,45 @@ export default function GamePage() {
     };
 
     const prepareResult = (photos: Photo[]) => {
-        // Determine Result A or B
-        const hasRequiredSpot = photos.some(p => {
-            const spot = SPOTS.find(s => s.id === p.spotId);
-            return spot?.type === 'required';
-        });
+        const capturedSpotIds = photos.map(p => p.spotId).filter((id): id is string => !!id);
 
         let scenario: TextSegment[] = [];
-        if (hasRequiredSpot) {
-            // Result B
-            scenario = TEXT.RESULT.SCENARIO_B[0]; // Only 1 pattern for now
+
+        // Condition 1: True Ending (Both Answer Spots Captured)
+        const hasSpotA = capturedSpotIds.includes('spot_a');
+        const hasSpotB = capturedSpotIds.includes('spot_b');
+
+        if (hasSpotA && hasSpotB) {
+            scenario = TEXT.RESULT.SCENARIO_ENDING[0];
         } else {
-            // Result A (Random)
-            const patterns = TEXT.RESULT.SCENARIO_A;
-            const randomIndex = Math.floor(Math.random() * patterns.length);
-            scenario = patterns[randomIndex];
+            // Condition 2: Incident Spots (Priority if no ending)
+            // If multiple incidents are captured, we could prioritize or combine.
+            // For now, let's pick the first one found, or have a hierarchy.
+            const incidentId = capturedSpotIds.find(id => ['murder', 'bicycle', 'wildfire'].includes(id));
+
+            if (incidentId) {
+                switch (incidentId) {
+                    case 'murder':
+                        scenario = TEXT.RESULT.SCENARIO_MURDER[0];
+                        break;
+                    case 'bicycle':
+                        scenario = TEXT.RESULT.SCENARIO_BICYCLE[0];
+                        break;
+                    case 'wildfire':
+                        scenario = TEXT.RESULT.SCENARIO_WILDFIRE[0];
+                        break;
+                    default:
+                        // Fallback shouldn't happen if check matches
+                        scenario = TEXT.RESULT.SCENARIO_A[0];
+                }
+            } else {
+                // Condition 3: Failure / Random (Only one answer spot or random spots)
+                const patterns = TEXT.RESULT.SCENARIO_A;
+                const randomIndex = Math.floor(Math.random() * patterns.length);
+                scenario = patterns[randomIndex];
+            }
         }
+
         setResultScenario(scenario);
         setShowResultSummary(false); // Reset summary state
     };
@@ -113,10 +136,11 @@ export default function GamePage() {
 
     const revealedAreas = capturedPhotos.map(p => ({ x: p.x, y: p.y }));
 
-    // Check ending condition
+    // Check ending condition for button display logic
+    // We can reuse the same logic or just check if the scenario is the Ending scenario
+    // But relying on scenario text might be brittle, so checking spots is safer.
     const capturedSpotIds = capturedPhotos.map(p => p.spotId).filter((id): id is string => !!id);
-    const requiredSpots = SPOTS.filter(s => s.type === 'required');
-    const isEndingConditionMet = requiredSpots.every(req => capturedSpotIds.includes(req.id));
+    const isEndingConditionMet = capturedSpotIds.includes('spot_a') && capturedSpotIds.includes('spot_b');
 
     const getPhotoInfo = (photo: Photo) => {
         if (!photo.spotId) {
@@ -127,7 +151,7 @@ export default function GamePage() {
         }
         const spot = SPOTS.find(s => s.id === photo.spotId);
         if (spot) {
-            // Accessing dynamic keys. Ensure TEXT.EPISODE matches keys in constants.ts
+            // Accessing dynamic keys.
             const ep = TEXT.EPISODE as any;
             return {
                 title: ep[spot.titleKey],
