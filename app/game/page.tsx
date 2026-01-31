@@ -74,7 +74,7 @@ export default function GamePage() {
             spotId
         };
 
-        const newPhotos = [newPhoto, ...capturedPhotos];
+        const newPhotos = [...capturedPhotos, newPhoto];
         setCapturedPhotos(newPhotos);
 
         // Check if we hit the limit (2 photos)
