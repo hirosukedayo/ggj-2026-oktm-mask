@@ -41,6 +41,21 @@ export default function GamePage() {
         }
     }, [router]);
 
+    // Ending BGM
+    React.useEffect(() => {
+        if (phase !== 'ending') return;
+
+        const audio = new Audio('/sounds/scenario_txt_bgm.mp3');
+        audio.loop = true;
+        audio.volume = SCENARIO_BGM_VOLUME;
+        audio.play().catch(e => console.log("Ending BGM autoplay blocked:", e));
+
+        return () => {
+            audio.pause();
+            audio.currentTime = 0;
+        };
+    }, [phase]);
+
     const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
     const [showResultSummary, setShowResultSummary] = useState(false);
 
