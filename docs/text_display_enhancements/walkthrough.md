@@ -16,7 +16,8 @@ I have implemented the enhanced text display for the Prologue and Result scenes.
 - Implemented the specific scenario text:
   1. "声を聞かせてください。声を。"
   2. "安嵜さん..." sequence.
-- **Flow**: Title -> Prologue (Text) -> Click "Trace Memory" -> Game.
+- **Persistence**: When the text sequence completes, the final text remains visible on screen while the "Trace Memory" (記憶を辿る) button fades in below it.
+- **Flow**: Title -> Prologue (Text) -> Text Completes (Remains Visible) -> "Trace Memory" Button Appears -> Click Button -> Game.
 
 ### 3. Result Scene
 - Implemented logic to branch based on captured photo content.
@@ -42,7 +43,7 @@ I have implemented the enhanced text display for the Prologue and Result scenes.
 ## Verification Results
 
 ### Manual Verification
-- **Prologue**: Text advances by clicking anywhere (empty space, photos, etc.).
+- **Prologue**: Text advances by clicking anywhere. Final text remains visible when button appears.
 - **Result A**: Shows random conversation when capturing non-required spots.
 - **Result B**: Shows "Truth" conversation when capturing required spots.
 - **Layout**: Verified that photos are visible during the text sequence, and buttons appear correctly after the text ends.

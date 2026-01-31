@@ -9,6 +9,7 @@
 - [x] Update `app/page.tsx` (Prologue) <!-- id: 2 -->
     - [x] Use `ClickToAdvanceText`
     - [x] Implement split text logic
+    - [x] Keep last text visible when button appears (User Request)
 - [x] Identify and Update Result Scene <!-- id: 3 -->
     - [x] Locate Result scene file
     - [x] Implement conversation style (Red/White text)

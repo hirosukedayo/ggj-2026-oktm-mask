@@ -42,21 +42,25 @@ export default function Home() {
           </>
         ) : (
           <div className={styles.prologueContainer}>
-            {!showPrologueButton ? (
+            <div className={styles.prologueContainer}>
               <ClickToAdvanceText
                 segments={TEXT.PROLOGUE.SEGMENTS}
                 onComplete={() => setShowPrologueButton(true)}
+                finished={showPrologueButton}
+                className={showPrologueButton ? styles.textFinished : ''}
               />
-            ) : (
-              <div className={styles.buttonWrapper}>
-                <button
-                  onClick={handlePrologueClick}
-                  className={`${styles.button} ${styles.fadeIn}`}
-                >
-                  {TEXT.PROLOGUE.BUTTON_ACTION}
-                </button>
-              </div>
-            )}
+
+              {showPrologueButton && (
+                <div className={styles.buttonWrapper}>
+                  <button
+                    onClick={handlePrologueClick}
+                    className={`${styles.button} ${styles.fadeIn}`}
+                  >
+                    {TEXT.PROLOGUE.BUTTON_ACTION}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </main >
