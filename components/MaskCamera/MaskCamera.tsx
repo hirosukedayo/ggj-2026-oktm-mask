@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./MaskCamera.module.css";
-import { TEXT } from "@/utils/locales";
+
 
 interface MaskCameraProps {
   imageSrc: string;
