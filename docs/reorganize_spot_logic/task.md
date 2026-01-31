@@ -1,0 +1,23 @@
+# Spot Logic Reorganization Task
+
+- [x] Update `app/game/constants.ts` with new spot definitions (Answer: A, B; Incident: Murder, Bicycle, Wildfire)
+- [x] Update `utils/locales.ts` to include text placeholders for new incident scenarios and combinations.
+- [x] Refactor `app/game/page.tsx`:
+    - [x] Update `checkSpotCollision` (if needed, or verify it works with new constants).
+    - [x] Implement `determineScenario` logic to handle:
+        - [x] Both Answer A & B -> Ending.
+        - [x] Incident combination or single Incident -> Unique Scenario.
+        - [x] Single Answer or No Spot -> Random Failure Scenario.
+    - [x] Update `prepareResult` to use `determineScenario`.
+    - [x] Clean up unused logic/constants if any.
+- [x] Update `app/game/constants.ts` with new spot definitions (Answer: A, B; Incident: Murder, Bicycle, Wildfire)
+- [x] Update `utils/locales.ts` to include text placeholders for new incident scenarios and combinations.
+- [x] Refactor `app/game/page.tsx`:
+    - [x] Update `checkSpotCollision` (if needed, or verify it works with new constants).
+    - [x] Implement `determineScenario` logic to handle:
+        - [x] Both Answer A & B -> Ending.
+        - [x] Incident combination or single Incident -> Unique Scenario.
+        - [x] Single Answer or No Spot -> Random Failure Scenario.
+    - [x] Update `prepareResult` to use `determineScenario`.
+    - [x] Clean up unused logic/constants if any.
+- [x] Verify the logic flow (manual verification or simulated).

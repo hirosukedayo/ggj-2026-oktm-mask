@@ -29,7 +29,7 @@ export const TEXT = {
     },
     RESULT: {
         TITLE: "記憶の復元完了",
-        // Result A: Non-event related (Randomized)
+        // Result A: Non-event related (Randomized Failure)
         SCENARIO_A: [
             [ // Pattern 1
                 { text: "僕は晴れた日に、\nただ歩いていただけだったんだ", type: 'protagonist' },
@@ -44,8 +44,27 @@ export const TEXT = {
                 { text: "安嵜さんは\nうすうす不穏なことが起きると\n思っていたのかもしれませんね", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
-        // Result B: Event related (Placeholder)
-        SCENARIO_B: [
+        // Incident Scenarios
+        SCENARIO_MURDER: [
+            [
+                { text: "血の匂いがした気がする...", type: 'protagonist' },
+                { text: "安嵜さん、それは重要な記憶です。\n恐れずに思い出してみましょう。", type: 'psychiatrist' }
+            ]
+        ] as TextSegment[][],
+        SCENARIO_BICYCLE: [
+            [
+                { text: "倒れた自転車...誰かのものだったか...", type: 'protagonist' },
+                { text: "誰の自転車だったか、思い出せますか？", type: 'psychiatrist' }
+            ]
+        ] as TextSegment[][],
+        SCENARIO_WILDFIRE: [
+            [
+                { text: "煙が見えた...山の方が赤かった...", type: 'protagonist' },
+                { text: "あの日の火事のことですね。\n覚えていますか？", type: 'psychiatrist' }
+            ]
+        ] as TextSegment[][],
+        // True Ending (Spot A + Spot B)
+        SCENARIO_ENDING: [
             [
                 { text: "待ってくれ...これは...", type: 'protagonist' },
                 { text: "そうです、安嵜さん。\nあなたはあの日、見てしまったんですね。", type: 'psychiatrist' },
@@ -63,10 +82,12 @@ export const TEXT = {
         SPOT_A_DESC: "あの娘だ。",
         SPOT_B_TITLE: "ぼく",
         SPOT_B_DESC: "これは...ぼくか？",
-        SPOT_C_TITLE: "懐かしい風景",
-        SPOT_C_DESC: "昔よく遊んだ空き地だ。",
-        SPOT_D_TITLE: "奇妙な看板",
-        SPOT_D_DESC: "見慣れない看板がある。こんな店あったっけ？",
+        SPOT_MURDER_TITLE: "不穏な気配",
+        SPOT_MURDER_DESC: "何か恐ろしいことが起きた気がする。",
+        SPOT_BICYCLE_TITLE: "放置された自転車",
+        SPOT_BICYCLE_DESC: "持ち主はどこへ行ったのだろう。",
+        SPOT_WILDFIRE_TITLE: "立ち昇る煙",
+        SPOT_WILDFIRE_DESC: "山が燃えている...",
         NOTHING_TITLE: "曖昧な記憶",
         NOTHING_DESC: "何も思い出せなかった..."
     },
