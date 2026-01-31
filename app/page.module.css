@@ -113,3 +113,27 @@
 .textFinished {
   pointer-events: none;
 }
+
+/* Scenario Selection Styles */
+.scenarioList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.scenarioButton {
+  text-align: left;
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+
+.scenarioButton.completed {
+  background: #333;
+  color: #aaa;
+}
+
+.scenarioButton:not(.completed):hover {
+  background: #fffa;
+}

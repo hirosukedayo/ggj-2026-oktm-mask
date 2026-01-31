@@ -1,0 +1,99 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    color: #fff;
+    font-family: var(--font-mincho);
+}
+
+.textContainer {
+    max-width: 800px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.actionButton {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-family: var(--font-mincho);
+    background: transparent;
+    border: 1px solid #ff4444;
+    color: #ff4444;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+}
+
+.actionButton:hover {
+    background: rgba(255, 68, 68, 0.1);
+    transform: scale(1.05);
+}
+
+.endingContainer {
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+    animation: fadeIn 2s ease-out forwards;
+}
+
+.endingTitle {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    white-space: pre-wrap;
+    line-height: 1.6;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.endingDescription {
+    font-size: 1.1rem;
+    line-height: 2;
+    white-space: pre-wrap;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.credits {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    margin-top: 2rem;
+    letter-spacing: 0.1em;
+}
+
+.resetButton {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-family: var(--font-mincho);
+    background: #fff;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+.resetButton:hover {
+    background: #eee;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
