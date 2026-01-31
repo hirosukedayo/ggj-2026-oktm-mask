@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 // ... imports ...
+import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { TEXT } from "@/utils/locales";
 
 export default function Home() {
@@ -14,9 +15,7 @@ export default function Home() {
 
   const handleStart = () => {
     setStep('prologue');
-    setTimeout(() => {
-      setShowPrologueButton(true);
-    }, 3000);
+    // Button will be shown after text completion
   };
 
   const handlePrologueClick = () => {
@@ -43,26 +42,25 @@ export default function Home() {
           </>
         ) : (
           <div className={styles.prologueContainer}>
-            <div className={styles.prologueText}>
-              <p>{TEXT.PROLOGUE.LINE_1}</p>
-              <br />
-              <p>{TEXT.PROLOGUE.LINE_2}</p>
-              <br />
-              <p>{TEXT.PROLOGUE.LINE_3}</p>
-            </div>
-            <div className={styles.buttonWrapper}>
-              <button
-                onClick={handlePrologueClick}
-                disabled={!showPrologueButton}
-                className={`${styles.button} ${showPrologueButton ? styles.fadeIn : styles.hiddenState}`}
-              >
-                {TEXT.PROLOGUE.BUTTON_ACTION}
-              </button>
-            </div>
+            {!showPrologueButton ? (
+              <ClickToAdvanceText
+                segments={TEXT.PROLOGUE.SEGMENTS}
+                onComplete={() => setShowPrologueButton(true)}
+              />
+            ) : (
+              <div className={styles.buttonWrapper}>
+                <button
+                  onClick={handlePrologueClick}
+                  className={`${styles.button} ${styles.fadeIn}`}
+                >
+                  {TEXT.PROLOGUE.BUTTON_ACTION}
+                </button>
+              </div>
+            )}
           </div>
         )}
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }
 

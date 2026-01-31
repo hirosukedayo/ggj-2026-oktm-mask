@@ -111,26 +111,29 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
+    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 100;
     opacity: 0;
     animation: fadeIn 0.5s ease-out forwards;
+    overflow-y: auto;
 }
 
 .resultContent {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 40px;
+    background: transparent;
+    border: none;
+    padding: 20px;
     text-align: center;
-    max-width: 800px;
-    width: 90%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: none;
     transform: translateY(20px);
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .resultContent h2 {
@@ -148,10 +151,10 @@
 }
 
 .photoCard {
-    background: #000;
+    background: transparent;
     padding: 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 0;
+    box-shadow: none;
     width: 320px;
     overflow: hidden;
     display: flex;
@@ -160,9 +163,8 @@
 
 .photoFrame {
     width: 100%;
-    background: #111;
-    padding: 10px;
-    /* Aspect ratio mainly controlled by content or explicit height if needed */
+    background: transparent;
+    padding: 0;
 }
 
 .photoFrame img {
@@ -176,7 +178,7 @@
 .photoText {
     padding: 16px;
     text-align: left;
-    background: #1a1a1a;
+    background: transparent;
     flex-grow: 1;
 }
 
@@ -280,13 +282,7 @@
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
-.endingSubtitle {
-    font-size: 1.2rem;
-    color: #e11d48;
-    margin-bottom: 40px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
+
 
 .endingDescription {
     font-size: 1.1rem;
