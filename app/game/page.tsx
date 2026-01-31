@@ -142,7 +142,7 @@ export default function GamePage() {
             {/* Main Game Area */}
             <main className={styles.mainArea}>
                 <MaskCamera
-                    imageSrc="/images/Okutama_Bteam_mock.png"
+                    imageSrc="/images/Okutama_Bteam_mock2.png"
                     width={960}
                     height={540}
                     maskRadius={100}
