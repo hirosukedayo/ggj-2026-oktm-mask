@@ -19,6 +19,9 @@ export default function Home() {
   };
 
   const handlePrologueClick = () => {
+    // Use window global to track state. This persists on soft nav, dies on reload.
+    // @ts-ignore
+    window.oktmGameStarted = true;
     router.push('/game');
   };
 

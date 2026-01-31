@@ -11,6 +11,7 @@ export const TEXT = {
         RETICLE_LIMIT: "LIMIT",
         BUTTON_RESET: "もう一度思い出す",
         BUTTON_ENDING: "真実の記憶へ",
+        BUTTON_TITLE_BACK: "タイトルへ戻る",
     },
     TITLE_SCREEN: {
         TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件追憶",
