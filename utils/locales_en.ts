@@ -31,17 +31,17 @@ export const TEXT_EN = {
         DESCRIPTION: "Global Game Jam @ Okutama - Team B",
         BUTTON_START: "Start",
         // Scenario Selection (shown after unlock)
-        SCENARIO_Y: "FILE Y-001: YASUZAKI",
+        SCENARIO_A: "FILE A-001: ANZAKI",
         SCENARIO_E: "FILE E-002: ENDO",
-        SCENARIO_A: "FILE A-003: ASHIDA",
-        SCENARIO_M: "FILE M-004: MEIJO",
+        SCENARIO_A2: "FILE A-003: ASHIDA",
+        SCENARIO_N: "FILE N-004: NASHIRO",
         SCENARIO_X: "FILE X-XXX",
         COMING_SOON: "[SEALED]",
     },
     // ============================================================
-    // Scenario Y: Yasuzaki (The Bystander)
+    // Scenario A: Anzaki (The Bystander)
     // ============================================================
-    PROLOGUE: {
+    PROLOGUE_A: {
         BUTTON_ACTION: "I understand. Give me a moment.",
         SEGMENTS: [
             { text: "Let me hear your voice. Your voice.", type: 'psychiatrist' },
@@ -50,7 +50,7 @@ export const TEXT_EN = {
             { text: "Take your time.\nThere is no rush.", type: 'psychiatrist' }
         ] as TextSegment[]
     },
-    RESULT: {
+    RESULT_A: {
         TITLE: "Memory Restoration Complete",
         // Result A: Non-event related (Randomized Failure)
         SCENARIO_A: [
@@ -100,7 +100,7 @@ export const TEXT_EN = {
             LOW: "My memory is still vague...\n\nIt's like I'm in a fog, everything is blurry. Only the sensation that something happened remains. I need to concentrate more...",
         }
     },
-    EPISODE: {
+    EPISODE_A: {
         SPOT_A_TITLE: "That Girl",
         SPOT_A_DESC: "It's that girl.",
         SPOT_B_TITLE: "Me",
@@ -114,7 +114,7 @@ export const TEXT_EN = {
         NOTHING_TITLE: "Vague Memory",
         NOTHING_DESC: "I couldn't remember anything..."
     },
-    ENDING: {
+    ENDING_A: {
         TITLE: "June 13, 2005\nMemories of the Zentsuji Riot",
         DESCRIPTION: "All memories are connected, and the truth is revealed.\n\nThe riot on June 13th was not a coincidence, but a setup.\nThe faint light left in the camera illuminates the truth buried in darkness.",
         CREDITS: "Thank you for playing.",
@@ -156,12 +156,12 @@ export const TEXT_EN = {
                 { text: "When you were 27,\nthat's how you felt.", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
-        SCENARIO_YASUZAKI: [
+        SCENARIO_ANZAKI: [
             [
-                { text: "That person... It's Mr. Yasuzaki.\nHe listened to my problems the day before...", type: 'protagonist' },
+                { text: "That person... It's Mr. Anzaki.\nHe listened to my problems the day before...", type: 'protagonist' },
                 { text: "I told him about\nmy relationship with him.", type: 'protagonist' },
                 { text: "I didn't know what to do anymore.", type: 'protagonist' },
-                { text: "You spoke with Mr. Yasuzaki.\nWhat did you discuss?", type: 'psychiatrist' },
+                { text: "You spoke with Mr. Anzaki.\nWhat did you discuss?", type: 'psychiatrist' },
                 { text: "Did talking to him\nmake you feel better?", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
@@ -207,8 +207,8 @@ export const TEXT_EN = {
         SPOT_E_A_DESC: "Me, on that day... what was I thinking?",
         SPOT_E_B_TITLE: "That Person",
         SPOT_E_B_DESC: "That person... who hurt me.",
-        SPOT_E_YASUZAKI_TITLE: "Mr. Yasuzaki",
-        SPOT_E_YASUZAKI_DESC: "The one who listened to me...",
+        SPOT_E_ANZAKI_TITLE: "Mr. Anzaki",
+        SPOT_E_ANZAKI_DESC: "The one who listened to me...",
         SPOT_E_ASHIDA_TITLE: "Mr. Ashida",
         SPOT_E_ASHIDA_DESC: "The one who said he'd protect me...",
         SPOT_E_WILDFIRE_TITLE: "Burning Mountain",
@@ -224,9 +224,9 @@ export const TEXT_EN = {
 
 
     // ============================================================
-    // Scenario A: Ashida (The Perpetrator/Protector)
+    // Scenario A2: Ashida (The Perpetrator/Protector)
     // ============================================================
-    PROLOGUE_A: {
+    PROLOGUE_A2: {
         BUTTON_ACTION: "...I'll try to tell you",
         SEGMENTS: [
             { text: "Let me hear your voice.", type: 'psychiatrist' },
@@ -237,7 +237,7 @@ export const TEXT_EN = {
             { text: "Take your time.\nLet's remember bit by bit.", type: 'psychiatrist' }
         ] as TextSegment[]
     },
-    RESULT_A: {
+    RESULT_A2: {
         TITLE: "Memory Restoration Complete",
         SCENARIO_A: [
             [
@@ -275,12 +275,12 @@ export const TEXT_EN = {
                 { text: "Was that fire\nrelated to you?", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
-        SCENARIO_YASUZAKI: [
+        SCENARIO_ANZAKI: [
             [
-                { text: "That man... Yasuzaki.\nHe was watching me.", type: 'protagonist' },
+                { text: "That man... Anzaki.\nHe was watching me.", type: 'protagonist' },
                 { text: "A bystander.\nSomeone who did nothing.", type: 'protagonist' },
                 { text: "But he could have stopped me.\nIf he wanted to.", type: 'protagonist' },
-                { text: "Can you remember\nMr. Yasuzaki?", type: 'psychiatrist' },
+                { text: "Can you remember\nMr. Anzaki?", type: 'psychiatrist' },
                 { text: "He was watching you.", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
@@ -303,7 +303,7 @@ export const TEXT_EN = {
             LOW: "My memory is still vague...",
         }
     },
-    EPISODE_A: {
+    EPISODE_A2: {
         SPOT_A_A_TITLE: "Me",
         SPOT_A_A_DESC: "Me, on that day... what did I do?",
         SPOT_A_B_TITLE: "Endo",
@@ -312,12 +312,12 @@ export const TEXT_EN = {
         SPOT_A_MIURA_DESC: "The man who was hurting Endo.",
         SPOT_A_WILDFIRE_TITLE: "Burning Mountain",
         SPOT_A_WILDFIRE_DESC: "Mt. Gahaishi, where I worked, burned.",
-        SPOT_A_YASUZAKI_TITLE: "Yasuzaki",
-        SPOT_A_YASUZAKI_DESC: "The bystander who watched me.",
+        SPOT_A_ANZAKI_TITLE: "Anzaki",
+        SPOT_A_ANZAKI_DESC: "The bystander who watched me.",
         NOTHING_TITLE: "Vague Memory",
         NOTHING_DESC: "I couldn't remember anything..."
     },
-    ENDING_A: {
+    ENDING_A2: {
         TITLE: "June 13, 2005\nAshida's Memory",
         DESCRIPTION: "I wanted to protect Endo.\nI wanted to save her from Miura.\n\nBut I chose the wrong way to protect her.\nI killed Miura.\n\nWas Endo grateful to me?\nOr was she afraid of me?\n\nI became forever trapped in this memory.\nProtecting and killing should be different things.",
         CREDITS: "Thank you for playing.",
@@ -325,32 +325,32 @@ export const TEXT_EN = {
 
 
     // ============================================================
-    // Scenario M: Meijo (The Avenger)
+    // Scenario N: Nashiro (The Avenger)
     // ============================================================
-    PROLOGUE_M: {
+    PROLOGUE_N: {
         BUTTON_ACTION: "...I'll talk",
         SEGMENTS: [
             { text: "Let me hear your voice.", type: 'psychiatrist' },
-            { text: "Mr. Meijo...\nYou are trying to remember\nwhat you did\non that day in 2005.", type: 'psychiatrist' },
+            { text: "Mr. Nashiro...\nYou are trying to remember\nwhat you did\non that day in 2005.", type: 'psychiatrist' },
             { text: "You are facing memories\nfrom 21 years ago...\nwhen you were 24.", type: 'psychiatrist' },
             { text: "The days you were hurt.\nWhat you burned.", type: 'psychiatrist' },
             { text: "It may be a painful memory.\nBut facing it is important.", type: 'psychiatrist' },
             { text: "Take your time.\nLet's remember bit by bit.", type: 'psychiatrist' }
         ] as TextSegment[]
     },
-    RESULT_M: {
+    RESULT_N: {
         TITLE: "Memory Restoration Complete",
         SCENARIO_A: [
             [
                 { text: "What was I doing that day...", type: 'protagonist' },
                 { text: "I was cycling around town.\nNo job, no place to go.", type: 'protagonist' },
-                { text: "Mr. Meijo, there's no rush.\nLet's remember bit by bit.", type: 'psychiatrist' },
+                { text: "Mr. Nashiro, there's no rush.\nLet's remember bit by bit.", type: 'psychiatrist' },
                 { text: "What were you feeling\nback then?", type: 'psychiatrist' }
             ],
             [
                 { text: "Every day was hell.\nWhen I was working at the factory.", type: 'protagonist' },
-                { text: "Kicked by Yasuzaki and the others.\nLaughed at.\nBut I stayed silent.", type: 'protagonist' },
-                { text: "Mr. Meijo, hold onto that feeling.\nCan you remember anything?", type: 'psychiatrist' }
+                { text: "Kicked by Anzaki and the others.\nLaughed at.\nBut I stayed silent.", type: 'protagonist' },
+                { text: "Mr. Nashiro, hold onto that feeling.\nCan you remember anything?", type: 'psychiatrist' }
             ],
             [
                 { text: "Before I knew it, I had quit the factory.\nOr was I forced out?", type: 'protagonist' },
@@ -367,12 +367,12 @@ export const TEXT_EN = {
                 { text: "What were you doing\nat that time?", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
-        SCENARIO_YASUZAKI: [
+        SCENARIO_ANZAKI: [
             [
-                { text: "Yasuzaki...\nThinking about him makes me sick.", type: 'protagonist' },
+                { text: "Anzaki...\nThinking about him makes me sick.", type: 'protagonist' },
                 { text: "He kicked me.\nIn secret, where no one could see.", type: 'protagonist' },
                 { text: "\"Useless,\" he said.\nAgain and again.", type: 'protagonist' },
-                { text: "Can you remember\nyour relationship with Mr. Yasuzaki?", type: 'psychiatrist' },
+                { text: "Can you remember\nyour relationship with Mr. Anzaki?", type: 'psychiatrist' },
                 { text: "What did he do to you?", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
@@ -387,13 +387,13 @@ export const TEXT_EN = {
         SCENARIO_ENDING: [
             [
                 { text: "I endured it all.\nEvery day at the factory.", type: 'protagonist' },
-                { text: "Even when Yasuzaki and the others kicked me.\nEven when they laughed.\nI stayed silent.", type: 'protagonist' },
+                { text: "Even when Anzaki and the others kicked me.\nEven when they laughed.\nI stayed silent.", type: 'protagonist' },
                 { text: "But I reached my limit.\nBefore I knew it, I had quit.", type: 'protagonist' },
                 { text: "I had nowhere to go.\nEvery day, cycling around town.", type: 'protagonist' },
-                { text: "That day, I went to Mt. Gahaishi.\nThe mountain where Yasuzaki worked.", type: 'protagonist' },
+                { text: "That day, I went to Mt. Gahaishi.\nThe mountain where Anzaki worked.", type: 'protagonist' },
                 { text: "I set it on fire.\nI wanted to burn everything.", type: 'protagonist' },
-                { text: "Yasuzaki's things.\nEverything belonging to those who kicked me.", type: 'protagonist' },
-                { text: "Mr. Meijo, you were\nbeing hurt.", type: 'psychiatrist' },
+                { text: "Anzaki's things.\nEverything belonging to those who kicked me.", type: 'protagonist' },
+                { text: "Mr. Nashiro, you were\nbeing hurt.", type: 'psychiatrist' },
                 { text: "But was it right\nto answer violence with violence?", type: 'psychiatrist' },
                 { text: "From now on,\nlet's face this memory together.", type: 'psychiatrist' }
             ]
@@ -404,23 +404,23 @@ export const TEXT_EN = {
             LOW: "My memory is still vague...",
         }
     },
-    EPISODE_M: {
-        SPOT_M_A_TITLE: "Me",
-        SPOT_M_A_DESC: "Me, cycling that day.",
-        SPOT_M_B_TITLE: "Mt. Gahaishi",
-        SPOT_M_B_DESC: "The mountain I burned.",
-        SPOT_M_MURDER_TITLE: "Some Incident",
-        SPOT_M_MURDER_DESC: "Someone died, they say... Nothing to do with me.",
-        SPOT_M_YASUZAKI_TITLE: "Yasuzaki",
-        SPOT_M_YASUZAKI_DESC: "The one who kicked me.",
-        SPOT_M_ENDO_TITLE: "That Woman",
-        SPOT_M_ENDO_DESC: "Don't know who... Nothing to do with me.",
+    EPISODE_N: {
+        SPOT_N_A_TITLE: "Me",
+        SPOT_N_A_DESC: "Me, cycling that day.",
+        SPOT_N_B_TITLE: "Mt. Gahaishi",
+        SPOT_N_B_DESC: "The mountain I burned.",
+        SPOT_N_MURDER_TITLE: "Some Incident",
+        SPOT_N_MURDER_DESC: "Someone died, they say... Nothing to do with me.",
+        SPOT_N_ANZAKI_TITLE: "Anzaki",
+        SPOT_N_ANZAKI_DESC: "The one who kicked me.",
+        SPOT_N_ENDO_TITLE: "That Woman",
+        SPOT_N_ENDO_DESC: "Don't know who... Nothing to do with me.",
         NOTHING_TITLE: "Vague Memory",
         NOTHING_DESC: "I couldn't remember anything..."
     },
-    ENDING_M: {
-        TITLE: "June 13, 2005\nMeijo's Memory",
-        DESCRIPTION: "I was always being hurt.\nKicked, laughed at, forced out by Yasuzaki and the others.\n\nNo one helped me.\nNo one even saw me.\n\nSo I burned the mountain.\nI wanted to burn everything of Yasuzaki's.\n\nI became forever trapped in this memory.\nThe one who was hurt became the one who hurts.",
+    ENDING_N: {
+        TITLE: "June 13, 2005\nNashiro's Memory",
+        DESCRIPTION: "I was always being hurt.\nKicked, laughed at, forced out by Anzaki and the others.\n\nNo one helped me.\nNo one even saw me.\n\nSo I burned the mountain.\nI wanted to burn everything of Anzaki's.\n\nI became forever trapped in this memory.\nThe one who was hurt became the one who hurts.",
         CREDITS: "Thank you for playing.",
     },
 
@@ -439,14 +439,14 @@ export const TEXT_EN = {
     RESULT_X: {
         SCENARIO_MAIN: [
             [
-                // Yasuzaki (安嵜) - Watcher
-                { text: "Yasuzaki was a bystander.\nHe saw the incident but did nothing.", type: 'psychiatrist' },
+                // Anzaki (安嵜) - Watcher
+                { text: "Anzaki was a bystander.\nHe saw the incident but did nothing.", type: 'psychiatrist' },
                 // Endo (遠藤) - Victim
                 { text: "Endo was a victim.\nShe was hurt and asked for help.", type: 'psychiatrist' },
                 // Ashida (芦田) - Perpetrator
                 { text: "Ashida was a perpetrator.\nHe tried to protect, and killed.", type: 'psychiatrist' },
-                // Meijo (名城) - Avenger
-                { text: "Meijo was an avenger.\nThe one who was hurt became the one who hurts.", type: 'psychiatrist' },
+                // Nashiro (名城) - Avenger
+                { text: "Nashiro was an avenger.\nThe one who was hurt became the one who hurts.", type: 'psychiatrist' },
                 { text: "...", type: 'psychiatrist' },
                 // You (あなた) - Player
                 { text: "And you.", type: 'psychiatrist' },
@@ -462,7 +462,7 @@ export const TEXT_EN = {
     },
     ENDING_X: {
         TITLE: "June 13, 2005\nYour Memory",
-        DESCRIPTION: "You watched the memories of four people.\n\nYasuzaki, Endo, Ashida, Meijo.\nTheir fates intertwined and burned out.\n\nWho were you?\nWhy were you watching this?\n\nThe answer lies only within the memories.\nOr perhaps, it never existed at all.",
+        DESCRIPTION: "You watched the memories of four people.\n\nAnzaki, Endo, Ashida, Nashiro.\nTheir fates intertwined and burned out.\n\nWho were you?\nWhy were you watching this?\n\nThe answer lies only within the memories.\nOr perhaps, it never existed at all.",
         CREDITS: "Thank you for playing.",
     }
 };

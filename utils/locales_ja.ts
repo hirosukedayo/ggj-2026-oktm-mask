@@ -8,7 +8,7 @@ export type Dictionary = typeof TEXT_JA;
 // Structure Overview:
 // - UI: Common UI elements (buttons, labels)
 // - TITLE_SCREEN: Title screen text and scenario names
-// - [SCENARIO_PREFIX]: Blocks for each scenario (Y, E, A, M, X)
+// - [SCENARIO_PREFIX]: Blocks for each scenario (A, E, A2, N, X)
 //   - PROLOGUE_[KEY]: Intro text before gameplay (Psychiatrist dialogue)
 //   - RESULT_[KEY]: Post-gameplay text segments based on player choices
 //     - SCENARIO_[KEY]: Specific text branches (e.g., specific spots found)
@@ -33,17 +33,17 @@ export const TEXT_JA = {
         DESCRIPTION: "Global Game Jam @ Okutama - Team B",
         BUTTON_START: "はじめる",
         // Scenario Selection (shown after unlock)
-        SCENARIO_Y: "調書 Y-001: 安崎",
+        SCENARIO_A: "調書 A-001: 安嵜",
         SCENARIO_E: "調書 E-002: 遠藤",
-        SCENARIO_A: "調書 A-003: 芦田",
-        SCENARIO_M: "調書 M-004: 名城",
+        SCENARIO_A2: "調書 A-003: 芦田",
+        SCENARIO_N: "調書 N-004: 名城",
         SCENARIO_X: "調書 X-XXX",
         COMING_SOON: "［開封待機］",
     },
     // ============================================================
-    // Scenario Y: Yasuzaki (安嵜) - The Bystander (傍観者)
+    // Scenario A: Anzaki (安嵜) - The Bystander (傍観者)
     // ============================================================
-    PROLOGUE: {
+    PROLOGUE_A: {
         BUTTON_ACTION: "わかった。少し待ってほしい",
         SEGMENTS: [
             { text: "声を聞かせてください。声を。", type: 'psychiatrist' },
@@ -52,7 +52,7 @@ export const TEXT_JA = {
             { text: "少しずつで大丈夫です\nゆっくりでいいですよ", type: 'psychiatrist' }
         ] as TextSegment[]
     },
-    RESULT: {
+    RESULT_A: {
         TITLE: "記憶の復元完了",
         // Result A: Non-event related (Randomized Failure)
         SCENARIO_A: [
@@ -106,7 +106,7 @@ export const TEXT_JA = {
             LOW: "まだ記憶が曖昧だ...\n\n霧の中にいるようで、何もかもがぼやけている。ただ、何かが起こったという感覚だけが残っている。もっと集中しなければ...",
         }
     },
-    EPISODE: {
+    EPISODE_A: {
         SPOT_A_TITLE: "あの娘",
         SPOT_A_DESC: "あの娘だ。",
         SPOT_B_TITLE: "ぼく",
@@ -120,8 +120,9 @@ export const TEXT_JA = {
         NOTHING_TITLE: "曖昧な記憶",
         NOTHING_DESC: "何も思い出せなかった..."
     },
-    ENDING: {
-        TITLE: "2005年6月13日\n安嵜の記憶", DESCRIPTION: "全ての記憶が繋がり、真実が明らかになった。\n\n6月13日のあの暴動は、偶然ではなく仕組まれたものだったのだ。\nカメラに残された微かな光が、闇に葬られた真実を照らし出す。",
+    ENDING_A: {
+        TITLE: "2005年6月13日\n安嵜の記憶",
+        DESCRIPTION: "全ての記憶が繋がり、真実が明らかになった。\n\n6月13日のあの暴動は、偶然ではなく仕組まれたものだったのだ。\nカメラに残された微かな光が、闇に葬られた真実を照らし出す。",
         CREDITS: "Thank you for playing.",
     },
 
@@ -161,7 +162,7 @@ export const TEXT_JA = {
                 { text: "遠藤さんは27歳の時\nそう感じていたんですね", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
-        SCENARIO_YASUZAKI: [
+        SCENARIO_ANZAKI: [
             [
                 { text: "あの人...安嵜さんだ。\n前の日に相談に乗ってもらった...", type: 'protagonist' },
                 { text: "あの人には\n彼との関係のことを話した", type: 'protagonist' },
@@ -212,8 +213,8 @@ export const TEXT_JA = {
         SPOT_E_A_DESC: "あの日の私...何を考えていたんだろう",
         SPOT_E_B_TITLE: "あの人",
         SPOT_E_B_DESC: "あの人...私を傷つけた人",
-        SPOT_E_YASUZAKI_TITLE: "安嵜さん",
-        SPOT_E_YASUZAKI_DESC: "相談に乗ってくれた人...",
+        SPOT_E_ANZAKI_TITLE: "安嵜さん",
+        SPOT_E_ANZAKI_DESC: "相談に乗ってくれた人...",
         SPOT_E_ASHIDA_TITLE: "芦田さん",
         SPOT_E_ASHIDA_DESC: "私を守ってくれると言った人...",
         SPOT_E_WILDFIRE_TITLE: "燃える山",
@@ -229,9 +230,9 @@ export const TEXT_JA = {
 
 
     // ============================================================
-    // Scenario A: Ashida (芦田) - The Perpetrator (加害者/守護者)
+    // Scenario A2: Ashida (芦田) - The Perpetrator (加害者/守護者)
     // ============================================================
-    PROLOGUE_A: {
+    PROLOGUE_A2: {
         BUTTON_ACTION: "...話してみます",
         SEGMENTS: [
             { text: "声を聞かせてください。", type: 'psychiatrist' },
@@ -242,7 +243,7 @@ export const TEXT_JA = {
             { text: "ゆっくりでいいですよ。\n少しずつ思い出していきましょう。", type: 'psychiatrist' }
         ] as TextSegment[]
     },
-    RESULT_A: {
+    RESULT_A2: {
         TITLE: "記憶の復元完了",
         SCENARIO_A: [
             [
@@ -280,7 +281,7 @@ export const TEXT_JA = {
                 { text: "あの火事はあなたとは\n関係がありましたか？", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
-        SCENARIO_YASUZAKI: [
+        SCENARIO_ANZAKI: [
             [
                 { text: "あの男...安嵜か\n見ていたんだな、俺のことを", type: 'protagonist' },
                 { text: "傍観者だ\n何もしなかった奴だ", type: 'protagonist' },
@@ -308,7 +309,7 @@ export const TEXT_JA = {
             LOW: "まだ記憶が曖昧だ...",
         }
     },
-    EPISODE_A: {
+    EPISODE_A2: {
         SPOT_A_A_TITLE: "俺",
         SPOT_A_A_DESC: "あの日の俺...何をしてしまったんだ",
         SPOT_A_B_TITLE: "遠藤",
@@ -317,12 +318,12 @@ export const TEXT_JA = {
         SPOT_A_MIURA_DESC: "遠藤を傷つけていた男",
         SPOT_A_WILDFIRE_TITLE: "燃える山",
         SPOT_A_WILDFIRE_DESC: "俺が働いていた我拝師山が燃えた",
-        SPOT_A_YASUZAKI_TITLE: "安嵜",
-        SPOT_A_YASUZAKI_DESC: "俺を見ていた傍観者",
+        SPOT_A_ANZAKI_TITLE: "安嵜",
+        SPOT_A_ANZAKI_DESC: "俺を見ていた傍観者",
         NOTHING_TITLE: "曖昧な記憶",
         NOTHING_DESC: "何も思い出せなかった..."
     },
-    ENDING_A: {
+    ENDING_A2: {
         TITLE: "2005年6月13日\n芦田の記憶",
         DESCRIPTION: "俺は遠藤を守りたかった。\n三浦から救い出したかった。\n\nでも、守る方法を間違えた。\n俺は三浦を殺してしまった。\n\n遠藤は俺に感謝していたのか\nそれとも恐れていたのか。\n\n俺は永遠にこの記憶に囚われることになった。\n守ることと殺すことは違うはずだった。",
         CREDITS: "Thank you for playing.",
@@ -330,9 +331,9 @@ export const TEXT_JA = {
 
 
     // ============================================================
-    // Scenario M: Meijo (名城) - The Avenger (復讐者)
+    // Scenario N: Nashiro (名城) - The Avenger (復讐者)
     // ============================================================
-    PROLOGUE_M: {
+    PROLOGUE_N: {
         BUTTON_ACTION: "...話します",
         SEGMENTS: [
             { text: "声を聞かせてください。", type: 'psychiatrist' },
@@ -343,7 +344,7 @@ export const TEXT_JA = {
             { text: "ゆっくりでいいですよ。\n少しずつ思い出していきましょう。", type: 'psychiatrist' }
         ] as TextSegment[]
     },
-    RESULT_M: {
+    RESULT_N: {
         TITLE: "記憶の復元完了",
         SCENARIO_A: [
             [
@@ -372,7 +373,7 @@ export const TEXT_JA = {
                 { text: "あなたはその時\n何をしていましたか？", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
-        SCENARIO_YASUZAKI: [
+        SCENARIO_ANZAKI: [
             [
                 { text: "安嵜...\nあいつのことを思い出すと吐き気がする", type: 'protagonist' },
                 { text: "あいつは俺を蹴っていた\n隠れて、誰にも見られないように", type: 'protagonist' },
@@ -409,29 +410,26 @@ export const TEXT_JA = {
             LOW: "まだ記憶が曖昧だ...",
         }
     },
-    EPISODE_M: {
-        SPOT_M_A_TITLE: "俺",
-        SPOT_M_A_DESC: "あの日、自転車で走っていた俺",
-        SPOT_M_B_TITLE: "我拝師山",
-        SPOT_M_B_DESC: "俺が燃やした山",
-        SPOT_M_MURDER_TITLE: "何かの事件",
-        SPOT_M_MURDER_DESC: "誰かが死んだらしい...俺には関係ない",
-        SPOT_M_YASUZAKI_TITLE: "安嵜",
-        SPOT_M_YASUZAKI_DESC: "俺を蹴っていた奴",
-        SPOT_M_ENDO_TITLE: "あの女",
-        SPOT_M_ENDO_DESC: "誰だか知らない...俺には関係ない",
+    EPISODE_N: {
+        SPOT_N_A_TITLE: "俺",
+        SPOT_N_A_DESC: "あの日、自転車で走っていた俺",
+        SPOT_N_B_TITLE: "我拝師山",
+        SPOT_N_B_DESC: "俺が燃やした山",
+        SPOT_N_MURDER_TITLE: "何かの事件",
+        SPOT_N_MURDER_DESC: "誰かが死んだらしい...俺には関係ない",
+        SPOT_N_ANZAKI_TITLE: "安嵜",
+        SPOT_N_ANZAKI_DESC: "俺を蹴っていた奴",
+        SPOT_N_ENDO_TITLE: "あの女",
+        SPOT_N_ENDO_DESC: "誰だか知らない...俺には関係ない",
         NOTHING_TITLE: "曖昧な記憶",
         NOTHING_DESC: "何も思い出せなかった..."
     },
-    ENDING_M: {
+    ENDING_N: {
         TITLE: "2005年6月13日\n名城の記憶",
         DESCRIPTION: "俺はずっと傷つけられていた。\n安嵜たちに蹴られ、笑われ、辞めさせられた。\n\n誰も助けてくれなかった。\n誰も俺を見ていなかった。\n\nだから俺は山を燃やした。\n安嵜たちのものを全部燃やしてやりたかった。\n\n俺は永遠にこの記憶に囚われることになった。\n傷つけられた者が傷つける側になった。",
         CREDITS: "Thank you for playing.",
     },
 
-    // ============================================================
-    // Scenario X: The Player (あなた) - The Observer (観測者)
-    // ==================================================
     // ============================================================
     // Scenario X: The Player (あなた) - The Observer (観測者)
     // ============================================================
@@ -446,13 +444,13 @@ export const TEXT_JA = {
     RESULT_X: {
         SCENARIO_MAIN: [
             [
-                // Yasuzaki (安嵜) - Watcher
+                // Anzaki (安嵜) - Watcher
                 { text: "安嵜は傍観者でした。\n事件を見ていたのに\n何もしなかった。", type: 'psychiatrist' },
                 // Endo (遠藤) - Victim
                 { text: "遠藤は被害者でした。\n傷つけられ、助けを求めた。", type: 'psychiatrist' },
                 // Ashida (芦田) - Perpetrator
                 { text: "芦田は加害者でした。\n守ろうとして、殺した。", type: 'psychiatrist' },
-                // Meijo (名城) - Avenger
+                // Nashiro (名城) - Avenger
                 { text: "名城は復讐者でした。\n傷つけられた者が、傷つける側になった。", type: 'psychiatrist' },
                 { text: "...", type: 'psychiatrist' },
                 // You (あなた) - Player

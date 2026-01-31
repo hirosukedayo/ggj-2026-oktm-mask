@@ -9,7 +9,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { EyeOpenTransition } from "@/components/EyeOpenTransition/EyeOpenTransition";
 import { SPOTS, Spot } from "./constants";
-import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
+import { SCENARIO_BGM_VOLUME, MAIN_BGM_VOLUME } from "@/utils/audioConfig";
 
 interface Photo {
     id: number;
@@ -21,7 +21,7 @@ interface Photo {
 
 type GamePhase = 'capturing' | 'result' | 'ending';
 
-export default function GamePage() {
+export default function AshidaScenarioPage() {
     const router = useRouter();
     const [capturedPhotos, setCapturedPhotos] = useState<Photo[]>([]);
     const [phase, setPhase] = useState<GamePhase>('capturing');
@@ -31,30 +31,29 @@ export default function GamePage() {
     // Route guard: Redirect to title if not started via prologue
     React.useEffect(() => {
         // @ts-expect-error
-        const hasStarted = typeof window !== 'undefined' && window.oktmGameStarted;
+        const hasStarted = typeof window !== 'undefined' && window.oktmGameStartedA2;
 
-        // In development (Strict Mode), effects run twice.
-        // Window variable stays set during soft navs and double-effects.
-        // But on reload, window is cleared, so hasStarted will be false.
         if (!hasStarted) {
-            router.replace('/');
+            router.replace('/?unlock=y,e');
         }
     }, [router]);
 
-    // Ending BGM
-    React.useEffect(() => {
-        if (phase !== 'ending') return;
+    // Main BGM (Capturing -> Result -> Ending)
+    const mainBgmRef = React.useRef<HTMLAudioElement | null>(null);
 
-        const audio = new Audio('/sounds/scenario_txt_bgm.mp3');
+    React.useEffect(() => {
+        const audio = new Audio('/sounds/bgm.mp3');
         audio.loop = true;
-        audio.volume = SCENARIO_BGM_VOLUME;
-        audio.play().catch(e => console.log("Ending BGM autoplay blocked:", e));
+        audio.volume = MAIN_BGM_VOLUME;
+        mainBgmRef.current = audio;
+
+        audio.play().catch(e => console.log("Main BGM autoplay blocked:", e));
 
         return () => {
             audio.pause();
             audio.currentTime = 0;
         };
-    }, [phase]);
+    }, []);
 
     const [resultScenario, setResultScenario] = useState<TextSegment[]>([]);
     const [showResultSummary, setShowResultSummary] = useState(false);
@@ -109,71 +108,64 @@ export default function GamePage() {
 
         let scenario: TextSegment[] = [];
 
-        // Condition 1: True Ending (Both Answer Spots Captured)
+        // Condition 1: True Ending (Both Answer Spots Captured - 芦田 + 遠藤)
         const hasSpotA = capturedSpotIds.includes('spot_a');
         const hasSpotB = capturedSpotIds.includes('spot_b');
 
         if (hasSpotA && hasSpotB) {
-            scenario = text.RESULT.SCENARIO_ENDING[0];
+            scenario = text.RESULT_A2.SCENARIO_ENDING[0];
         } else {
-            // Condition 2: Incident Spots (Priority if no ending)
-            // If multiple incidents are captured, we could prioritize or combine.
-            // For now, let's pick the first one found, or have a hierarchy.
-            const incidentId = capturedSpotIds.find(id => ['murder', 'bicycle', 'wildfire'].includes(id));
+            // Condition 2: Incident Spots
+            const incidentId = capturedSpotIds.find(id => ['miura', 'wildfire', 'anzaki'].includes(id));
 
             if (incidentId) {
                 switch (incidentId) {
-                    case 'murder':
-                        scenario = text.RESULT.SCENARIO_MURDER[0];
-                        break;
-                    case 'bicycle':
-                        scenario = text.RESULT.SCENARIO_BICYCLE[0];
+                    case 'miura':
+                        scenario = text.RESULT_A2.SCENARIO_MIURA[0];
                         break;
                     case 'wildfire':
-                        scenario = text.RESULT.SCENARIO_WILDFIRE[0];
+                        scenario = text.RESULT_A2.SCENARIO_WILDFIRE[0];
+                        break;
+                    case 'anzaki':
+                        scenario = text.RESULT_A2.SCENARIO_ANZAKI[0];
                         break;
                     default:
-                        // Fallback shouldn't happen if check matches
-                        scenario = text.RESULT.SCENARIO_A[0];
+                        scenario = text.RESULT_A2.SCENARIO_A[0];
                 }
             } else {
-                // Condition 3: Failure / Random (Only one answer spot or random spots)
-                const patterns = text.RESULT.SCENARIO_A;
+                // Condition 3: Failure / Random
+                const patterns = text.RESULT_A2.SCENARIO_A;
                 const randomIndex = Math.floor(Math.random() * patterns.length);
                 scenario = patterns[randomIndex];
             }
         }
 
         setResultScenario(scenario);
-        setShowResultSummary(false); // Reset summary state
+        setShowResultSummary(false);
     };
 
     const handleReset = () => {
         setCapturedPhotos([]);
         setPhase('capturing');
         setShowResultSummary(false);
-        setShowTransition(true); // Trigger transition again
+        setShowTransition(true);
     };
 
     const revealedAreas = capturedPhotos.map(p => ({ x: p.x, y: p.y }));
 
-    // Check ending condition for button display logic
-    // We can reuse the same logic or just check if the scenario is the Ending scenario
-    // But relying on scenario text might be brittle, so checking spots is safer.
     const capturedSpotIds = capturedPhotos.map(p => p.spotId).filter((id): id is string => !!id);
     const isEndingConditionMet = capturedSpotIds.includes('spot_a') && capturedSpotIds.includes('spot_b');
 
     const getPhotoInfo = (photo: Photo) => {
         if (!photo.spotId) {
             return {
-                title: text.EPISODE.NOTHING_TITLE,
-                desc: text.EPISODE.NOTHING_DESC
+                title: text.EPISODE_A2.NOTHING_TITLE,
+                desc: text.EPISODE_A2.NOTHING_DESC
             };
         }
         const spot = SPOTS.find(s => s.id === photo.spotId);
         if (spot) {
-            // Accessing dynamic keys.
-            const ep = text.EPISODE as Record<string, string>;
+            const ep = text.EPISODE_A2 as Record<string, string>;
             return {
                 title: ep[spot.titleKey],
                 desc: ep[spot.descKey]
@@ -234,37 +226,8 @@ export default function GamePage() {
                             />
                         </div>
 
-                        {showResultSummary && (
-                            <div className={styles.actionButtons}>
 
-
-                                {isEndingConditionMet ? (
-                                    <button
-                                        className={`${styles.resetButton} ${styles.endingButton}`}
-                                        onClick={() => setPhase('ending')}
-                                    >
-                                        {text.UI.BUTTON_ENDING}
-                                    </button>
-                                ) : (
-                                    <button className={styles.resetButton} onClick={handleReset}>
-                                        {text.UI.BUTTON_RESET}
-                                    </button>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
-
-            {/* Ending Overlay */}
-            {phase === 'ending' && (
-                <div className={styles.endingOverlay}>
-                    <div className={styles.endingContent}>
-                        <h1 className={styles.endingTitle}>{text.ENDING.TITLE}</h1>
-                        <p className={styles.endingDescription}>{text.ENDING.DESCRIPTION}</p>
-                        <p className={styles.credits}>{text.ENDING.CREDITS}</p>
-
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=y')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2,n')} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>

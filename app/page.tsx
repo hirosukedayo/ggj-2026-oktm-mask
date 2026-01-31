@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { useLanguage } from "@/components/LanguageProvider";
 
-type Step = 'title' | 'prologue_y' | 'prologue_e' | 'prologue_a' | 'prologue_m' | 'prologue_x';
+type Step = 'title' | 'prologue_a' | 'prologue_e' | 'prologue_a2' | 'prologue_n' | 'prologue_x';
 
 function HomeContent() {
   const [step, setStep] = useState<Step>('title');
@@ -17,63 +17,67 @@ function HomeContent() {
 
   // Check unlock status via URL parameter
   const unlockParam = searchParams.get('unlock') ?? '';
-  const isYUnlocked = unlockParam.includes('y');
-  const isEUnlocked = unlockParam.includes('e');
-  const isAUnlocked = unlockParam.includes('a');
-  const isMUnlocked = unlockParam.includes('m');
-  const isXUnlocked = unlockParam.includes('x');
+  // Anzaki (old Y) -> a
+  const isAUnlocked = unlockParam.includes('a') && !unlockParam.includes('a2'); // 'a' might match 'a2', need careful check or split. 
+  // Wait, .includes('a') will match 'a2'. Better split by comma.
+  const unlockedList = unlockParam.split(',');
+  const isAnzakiUnlocked = unlockedList.includes('a');
+  const isEndoUnlocked = unlockedList.includes('e');
+  const isAshidaUnlocked = unlockedList.includes('a2');
+  const isNashiroUnlocked = unlockedList.includes('n');
+  const isPlayerUnlocked = unlockedList.includes('x');
 
-  const handleStartY = () => {
-    setStep('prologue_y');
-    setShowPrologueButton(false);
-  };
-
-  const handleStartE = () => {
-    setStep('prologue_e');
-    setShowPrologueButton(false);
-  };
-
-  const handleStartA = () => {
+  const handleStartAnzaki = () => {
     setStep('prologue_a');
     setShowPrologueButton(false);
   };
 
-  const handleStartM = () => {
-    setStep('prologue_m');
+  const handleStartEndo = () => {
+    setStep('prologue_e');
     setShowPrologueButton(false);
   };
 
-  const handleStartX = () => {
+  const handleStartAshida = () => {
+    setStep('prologue_a2');
+    setShowPrologueButton(false);
+  };
+
+  const handleStartNashiro = () => {
+    setStep('prologue_n');
+    setShowPrologueButton(false);
+  };
+
+  const handleStartPlayer = () => {
     setStep('prologue_x');
     setShowPrologueButton(false);
   };
 
-  const handlePrologueClickY = () => {
-    // @ts-expect-error
-    window.oktmGameStarted = true;
-    router.push('/y');
-  };
-
-  const handlePrologueClickE = () => {
-    // @ts-expect-error
-    window.oktmGameStartedE = true;
-    router.push('/e');
-  };
-
-  const handlePrologueClickA = () => {
-    // @ts-expect-error
+  const handlePrologueClickAnzaki = () => {
+    // @ts-expect-error Global flag for route guard
     window.oktmGameStartedA = true;
     router.push('/a');
   };
 
-  const handlePrologueClickM = () => {
-    // @ts-expect-error
-    window.oktmGameStartedM = true;
-    router.push('/m');
+  const handlePrologueClickEndo = () => {
+    // @ts-expect-error Global flag for route guard
+    window.oktmGameStartedE = true;
+    router.push('/e');
   };
 
-  const handlePrologueClickX = () => {
-    // @ts-expect-error
+  const handlePrologueClickAshida = () => {
+    // @ts-expect-error Global flag for route guard
+    window.oktmGameStartedA2 = true;
+    router.push('/a2');
+  };
+
+  const handlePrologueClickNashiro = () => {
+    // @ts-expect-error Global flag for route guard
+    window.oktmGameStartedN = true;
+    router.push('/n');
+  };
+
+  const handlePrologueClickPlayer = () => {
+    // @ts-expect-error Global flag for route guard
     window.oktmGameStartedX = true;
     router.push('/x');
   };
@@ -81,20 +85,20 @@ function HomeContent() {
   const getCurrentPrologue = () => {
     switch (step) {
       case 'prologue_e': return text.PROLOGUE_E;
-      case 'prologue_a': return text.PROLOGUE_A;
-      case 'prologue_m': return text.PROLOGUE_M;
+      case 'prologue_a2': return text.PROLOGUE_A2;
+      case 'prologue_n': return text.PROLOGUE_N;
       case 'prologue_x': return text.PROLOGUE_X;
-      default: return text.PROLOGUE;
+      default: return text.PROLOGUE_A; // Default to Anzaki (was PROLOGUE)
     }
   };
 
   const getCurrentPrologueClick = () => {
     switch (step) {
-      case 'prologue_e': return handlePrologueClickE;
-      case 'prologue_a': return handlePrologueClickA;
-      case 'prologue_m': return handlePrologueClickM;
-      case 'prologue_x': return handlePrologueClickX;
-      default: return handlePrologueClickY;
+      case 'prologue_e': return handlePrologueClickEndo;
+      case 'prologue_a2': return handlePrologueClickAshida;
+      case 'prologue_n': return handlePrologueClickNashiro;
+      case 'prologue_x': return handlePrologueClickPlayer;
+      default: return handlePrologueClickAnzaki;
     }
   };
 
@@ -114,49 +118,49 @@ function HomeContent() {
             </p>
 
             <div className={styles.actions}>
-              {isYUnlocked ? (
+              {isAnzakiUnlocked ? (
                 // Scenario Selection Mode
                 <div className={styles.scenarioList}>
                   <button
-                    onClick={handleStartY}
+                    onClick={handleStartAnzaki}
                     className={`${styles.button} ${styles.scenarioButton} ${styles.completed}`}
                   >
-                    ☑ {text.TITLE_SCREEN.SCENARIO_Y}
+                    ☑ {text.TITLE_SCREEN.SCENARIO_A}
                   </button>
                   <button
-                    onClick={handleStartE}
-                    className={`${styles.button} ${styles.scenarioButton} ${isEUnlocked ? styles.completed : ''}`}
+                    onClick={handleStartEndo}
+                    className={`${styles.button} ${styles.scenarioButton} ${isEndoUnlocked ? styles.completed : ''}`}
                   >
-                    {isEUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_E}
+                    {isEndoUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_E}
                   </button>
-                  {isEUnlocked && (
+                  {isEndoUnlocked && (
                     <button
-                      onClick={handleStartA}
-                      className={`${styles.button} ${styles.scenarioButton} ${isAUnlocked ? styles.completed : ''}`}
+                      onClick={handleStartAshida}
+                      className={`${styles.button} ${styles.scenarioButton} ${isAshidaUnlocked ? styles.completed : ''}`}
                     >
-                      {isAUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_A}
+                      {isAshidaUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_A2}
                     </button>
                   )}
-                  {isAUnlocked && (
+                  {isAshidaUnlocked && (
                     <button
-                      onClick={handleStartM}
-                      className={`${styles.button} ${styles.scenarioButton} ${isMUnlocked ? styles.completed : ''}`}
+                      onClick={handleStartNashiro}
+                      className={`${styles.button} ${styles.scenarioButton} ${isNashiroUnlocked ? styles.completed : ''}`}
                     >
-                      {isMUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_M}
+                      {isNashiroUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_N}
                     </button>
                   )}
-                  {isMUnlocked && (
+                  {isNashiroUnlocked && (
                     <button
-                      onClick={handleStartX}
-                      className={`${styles.button} ${styles.scenarioButton} ${isXUnlocked ? styles.completed : ''}`}
+                      onClick={handleStartPlayer}
+                      className={`${styles.button} ${styles.scenarioButton} ${isPlayerUnlocked ? styles.completed : ''}`}
                     >
-                      {isXUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_X}
+                      {isPlayerUnlocked ? '☑' : '☐'} {text.TITLE_SCREEN.SCENARIO_X}
                     </button>
                   )}
                 </div>
               ) : (
                 // Normal Start Mode
-                <button onClick={handleStartY} className={styles.button}>
+                <button onClick={handleStartAnzaki} className={styles.button}>
                   {text.TITLE_SCREEN.BUTTON_START}
                 </button>
               )}

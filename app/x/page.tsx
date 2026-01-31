@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { useLanguage } from "@/components/LanguageProvider";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
-import { SCENARIO_BGM_VOLUME } from "@/utils/audioConfig";
+import { SCENARIO_BGM_VOLUME, MAIN_BGM_VOLUME } from "@/utils/audioConfig";
 
 type Phase = 'main' | 'ending';
 
@@ -21,16 +21,20 @@ export default function XScenarioPage() {
         const hasStarted = typeof window !== 'undefined' && window.oktmGameStartedX;
 
         if (!hasStarted) {
-            router.replace('/?unlock=y,e,a,m');
+            router.replace('/?unlock=a,e,a2,n');
         }
     }, [router]);
 
-    // BGM
+    // Main BGM
+    const mainBgmRef = React.useRef<HTMLAudioElement | null>(null);
+
     React.useEffect(() => {
-        const audio = new Audio('/sounds/scenario_txt_bgm.mp3');
+        const audio = new Audio('/sounds/bgm.mp3');
         audio.loop = true;
-        audio.volume = SCENARIO_BGM_VOLUME;
-        audio.play().catch(e => console.log("BGM autoplay blocked:", e));
+        audio.volume = MAIN_BGM_VOLUME;
+        mainBgmRef.current = audio;
+
+        audio.play().catch(e => console.log("Main BGM autoplay blocked:", e));
 
         return () => {
             audio.pause();
@@ -38,6 +42,7 @@ export default function XScenarioPage() {
         };
     }, []);
 
+    // Ending BGM (Scenario Text BGM) - only plays during 'ending' phase if needed, 
     const handleMainComplete = () => {
         setShowButton(true);
     };
@@ -71,7 +76,7 @@ export default function XScenarioPage() {
                     <p className={styles.endingDescription}>{text.ENDING_X.DESCRIPTION}</p>
                     <p className={styles.credits}>{text.ENDING_X.CREDITS}</p>
 
-                    <button className={styles.resetButton} onClick={() => router.push('/?unlock=y,e,a,m,x')} style={{ marginTop: '40px' }}>
+                    <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2,n,x')} style={{ marginTop: '40px' }}>
                         {text.UI.BUTTON_TITLE_BACK}
                     </button>
                 </div>
