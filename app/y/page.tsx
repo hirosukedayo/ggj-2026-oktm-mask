@@ -264,7 +264,7 @@ export default function GamePage() {
                         <p className={styles.endingDescription}>{text.ENDING.DESCRIPTION}</p>
                         <p className={styles.credits}>{text.ENDING.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={() => router.push('/')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=y')} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>
