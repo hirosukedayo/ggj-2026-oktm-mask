@@ -75,13 +75,24 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
       const maskCtx = maskCanvas.getContext('2d');
       if (!maskCtx) return;
 
-      const drawFeatheredOval = (mx: number, my: number) => {
+      const drawFeatheredOval = (mx: number, my: number, isSharp: boolean = false) => {
         maskCtx.save();
         maskCtx.translate(mx, my);
         maskCtx.scale(1.5, 1.0); // Oval shape
-        const grad = maskCtx.createRadialGradient(0, 0, maskRadius * 0.4, 0, 0, maskRadius);
-        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        const grad = maskCtx.createRadialGradient(0, 0, maskRadius * 0.2, 0, 0, maskRadius);
+
+        if (isSharp) {
+          // Sharp mode for revealed areas (Full visibility at center)
+          grad.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+          grad.addColorStop(0.6, 'rgba(255, 255, 255, 0.8)');
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        } else {
+          // Blurred mode for cursor preview (Partial visibility)
+          grad.addColorStop(0, 'rgba(255, 255, 255, 0.35)');
+          grad.addColorStop(0.6, 'rgba(255, 255, 255, 0.2)');
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        }
+
         maskCtx.fillStyle = grad;
         maskCtx.beginPath();
         maskCtx.arc(0, 0, maskRadius, 0, Math.PI * 2);
@@ -89,13 +100,13 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
         maskCtx.restore();
       };
 
-      // Current mouse
+      // Current mouse (Blurred preview)
       if (!disabled) {
-        drawFeatheredOval(mousePos.x, mousePos.y);
+        drawFeatheredOval(mousePos.x, mousePos.y, false);
       }
-      // Revealed areas
+      // Revealed areas (Sharp result)
       revealedAreas.forEach(area => {
-        drawFeatheredOval(area.x, area.y);
+        drawFeatheredOval(area.x, area.y, true);
       });
 
       // 3. Create Masked Sharp Image
@@ -188,9 +199,10 @@ export const MaskCamera: React.FC<MaskCameraProps> = ({
       cCtx.save();
       cCtx.translate(cropWidth / 2, cropHeight / 2);
       cCtx.scale(1.5, 1.0);
-      const grad = cCtx.createRadialGradient(0, 0, captureRadius * 0.4, 0, 0, captureRadius);
-      grad.addColorStop(0, 'rgba(0,0,0,1)');
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      const grad = cCtx.createRadialGradient(0, 0, captureRadius * 0.2, 0, 0, captureRadius);
+      grad.addColorStop(0, 'rgba(0,0,0,1)'); // Fully Clear (Opaque mask keeps pixels)
+      grad.addColorStop(0.5, 'rgba(0,0,0,1)'); // Keep center sharp longer
+      grad.addColorStop(1, 'rgba(0,0,0,0)'); // Fade out at edges
       cCtx.fillStyle = grad;
       cCtx.beginPath();
       cCtx.arc(0, 0, captureRadius, 0, Math.PI * 2);
