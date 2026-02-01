@@ -254,7 +254,14 @@ export default function EndoScenarioPage() {
                         <p className={styles.endingDescription}>{text.ENDING_E.DESCRIPTION}</p>
                         <p className={styles.credits}>{text.ENDING_E.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => {
+                            const currentUnlock = new URLSearchParams(window.location.search).get('unlock') || '';
+                            const unlockSet = new Set(currentUnlock.split(',').filter(Boolean));
+                            unlockSet.add('e');
+
+                            const newUnlock = Array.from(unlockSet).join(',');
+                            router.push(`/?unlock=${newUnlock}`);
+                        }} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>

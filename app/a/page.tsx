@@ -264,7 +264,15 @@ export default function GamePage() {
                         <p className={styles.endingDescription}>{text.ENDING_A.DESCRIPTION}</p>
                         <p className={styles.credits}>{text.ENDING_A.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => {
+                            // Calculate new unlock parameters
+                            const currentUnlock = new URLSearchParams(window.location.search).get('unlock') || '';
+                            const unlockSet = new Set(currentUnlock.split(',').filter(Boolean));
+                            unlockSet.add('a'); // Mark A as completed
+
+                            const newUnlock = Array.from(unlockSet).join(',');
+                            router.push(`/?unlock=${newUnlock}`);
+                        }} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>

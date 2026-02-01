@@ -254,7 +254,14 @@ export default function MeijoScenarioPage() {
                         <p className={styles.endingDescription}>{text.ENDING_N.DESCRIPTION}</p>
                         <p className={styles.credits}>{text.ENDING_N.CREDITS}</p>
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2,n,x')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => {
+                            const currentUnlock = new URLSearchParams(window.location.search).get('unlock') || '';
+                            const unlockSet = new Set(currentUnlock.split(',').filter(Boolean));
+                            unlockSet.add('n');
+
+                            const newUnlock = Array.from(unlockSet).join(',');
+                            router.push(`/?unlock=${newUnlock}`);
+                        }} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>

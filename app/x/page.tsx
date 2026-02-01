@@ -76,7 +76,14 @@ export default function XScenarioPage() {
                     <p className={styles.endingDescription}>{text.ENDING_X.DESCRIPTION}</p>
                     <p className={styles.credits}>{text.ENDING_X.CREDITS}</p>
 
-                    <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2,n,x')} style={{ marginTop: '40px' }}>
+                    <button className={styles.resetButton} onClick={() => {
+                        const currentUnlock = new URLSearchParams(window.location.search).get('unlock') || '';
+                        const unlockSet = new Set(currentUnlock.split(',').filter(Boolean));
+                        unlockSet.add('x');
+
+                        const newUnlock = Array.from(unlockSet).join(',');
+                        router.push(`/?unlock=${newUnlock}`);
+                    }} style={{ marginTop: '40px' }}>
                         {text.UI.BUTTON_TITLE_BACK}
                     </button>
                 </div>

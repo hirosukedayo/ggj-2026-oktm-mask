@@ -227,7 +227,42 @@ export default function AshidaScenarioPage() {
                         </div>
 
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2,n')} style={{ marginTop: '40px', color: '#000' }}>
+                        {showResultSummary && (
+                            <div className={styles.actionButtons}>
+                                {isEndingConditionMet ? (
+                                    <button
+                                        className={`${styles.resetButton} ${styles.endingButton}`}
+                                        onClick={() => setPhase('ending')}
+                                    >
+                                        {text.UI.BUTTON_ENDING}
+                                    </button>
+                                ) : (
+                                    <button className={styles.resetButton} onClick={handleReset}>
+                                        {text.UI.BUTTON_RESET}
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Ending Overlay */}
+            {phase === 'ending' && (
+                <div className={styles.endingOverlay}>
+                    <div className={styles.endingContent}>
+                        <h1 className={styles.endingTitle}>{text.ENDING_A2.TITLE}</h1>
+                        <p className={styles.endingDescription}>{text.ENDING_A2.DESCRIPTION}</p>
+                        <p className={styles.credits}>{text.ENDING_A2.CREDITS}</p>
+
+                        <button className={styles.resetButton} onClick={() => {
+                            const currentUnlock = new URLSearchParams(window.location.search).get('unlock') || '';
+                            const unlockSet = new Set(currentUnlock.split(',').filter(Boolean));
+                            unlockSet.add('a2');
+
+                            const newUnlock = Array.from(unlockSet).join(',');
+                            router.push(`/?unlock=${newUnlock}`);
+                        }} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>
