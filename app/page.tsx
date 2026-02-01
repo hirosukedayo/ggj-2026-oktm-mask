@@ -145,31 +145,36 @@ function HomeContent() {
   const handlePrologueClickAnzaki = () => {
     // @ts-expect-error Global flag for route guard
     window.oktmGameStartedA = true;
-    router.push('/a');
+    const unlockParam = searchParams.toString();
+    router.push(`/a${unlockParam ? `?${unlockParam}` : ''}`);
   };
 
   const handlePrologueClickEndo = () => {
     // @ts-expect-error Global flag for route guard
     window.oktmGameStartedE = true;
-    router.push('/e');
+    const unlockParam = searchParams.toString();
+    router.push(`/e${unlockParam ? `?${unlockParam}` : ''}`);
   };
 
   const handlePrologueClickAshida = () => {
     // @ts-expect-error Global flag for route guard
     window.oktmGameStartedA2 = true;
-    router.push('/a2');
+    const unlockParam = searchParams.toString();
+    router.push(`/a2${unlockParam ? `?${unlockParam}` : ''}`);
   };
 
   const handlePrologueClickNashiro = () => {
     // @ts-expect-error Global flag for route guard
     window.oktmGameStartedN = true;
-    router.push('/n');
+    const unlockParam = searchParams.toString();
+    router.push(`/n${unlockParam ? `?${unlockParam}` : ''}`);
   };
 
   const handlePrologueClickPlayer = () => {
     // @ts-expect-error Global flag for route guard
     window.oktmGameStartedX = true;
-    router.push('/x');
+    const unlockParam = searchParams.toString();
+    router.push(`/x${unlockParam ? `?${unlockParam}` : ''}`);
   };
 
   const getCurrentPrologue = () => {
