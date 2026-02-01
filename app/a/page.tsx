@@ -119,28 +119,41 @@ export default function GamePage() {
         if (hasSpotA && hasSpotB) {
             scenario = text.RESULT_A.SCENARIO_ENDING[0];
         } else {
-            // Condition 2: Incident Spots (Priority if no ending)
-            const incidentId = capturedSpotIds.find(id => ['murder', 'bicycle', 'wildfire'].includes(id));
+            // Condition 2: Special Combinations
+            const hasMurder = capturedSpotIds.includes('murder');
+            const hasWildfire = capturedSpotIds.includes('wildfire');
+            const hasBicycle = capturedSpotIds.includes('bicycle');
 
-            if (incidentId) {
-                switch (incidentId) {
-                    case 'murder':
-                        scenario = text.RESULT_A.SCENARIO_MURDER[0];
-                        break;
-                    case 'bicycle':
-                        scenario = text.RESULT_A.SCENARIO_BICYCLE[0];
-                        break;
-                    case 'wildfire':
-                        scenario = text.RESULT_A.SCENARIO_WILDFIRE[0];
-                        break;
-                    default:
-                        scenario = text.RESULT_A.SCENARIO_A[0];
-                }
+            if (hasMurder && hasWildfire) {
+                scenario = text.RESULT_A.SCENARIO_MURDER_WILDFIRE[0];
+            } else if (hasMurder && hasBicycle) {
+                scenario = text.RESULT_A.SCENARIO_MURDER_BICYCLE[0];
+            } else if (hasBicycle && hasWildfire) {
+                scenario = text.RESULT_A.SCENARIO_BICYCLE_WILDFIRE[0];
             } else {
-                // Condition 3: Failure / Random
-                const patterns = text.RESULT_A.SCENARIO_A;
-                const randomIndex = Math.floor(Math.random() * patterns.length);
-                scenario = patterns[randomIndex];
+                // Condition 3: Incident Spots (Priority if no ending or combination)
+                const incidentId = capturedSpotIds.find(id => ['murder', 'bicycle', 'wildfire'].includes(id));
+
+                if (incidentId) {
+                    switch (incidentId) {
+                        case 'murder':
+                            scenario = text.RESULT_A.SCENARIO_MURDER[0];
+                            break;
+                        case 'bicycle':
+                            scenario = text.RESULT_A.SCENARIO_BICYCLE[0];
+                            break;
+                        case 'wildfire':
+                            scenario = text.RESULT_A.SCENARIO_WILDFIRE[0];
+                            break;
+                        default:
+                            scenario = text.RESULT_A.SCENARIO_A[0];
+                    }
+                } else {
+                    // Condition 4: Failure / Random
+                    const patterns = text.RESULT_A.SCENARIO_A;
+                    const randomIndex = Math.floor(Math.random() * patterns.length);
+                    scenario = patterns[randomIndex];
+                }
             }
         }
 
@@ -259,12 +272,9 @@ export default function GamePage() {
             {/* Ending Overlay */}
             {phase === 'ending' && (
                 <div className={styles.endingOverlay}>
-                    <div className={styles.endingContent}>
-                        <h1 className={styles.endingTitle}>{text.ENDING_A.TITLE}</h1>
-                        <p className={styles.endingDescription}>{text.ENDING_A.DESCRIPTION}</p>
-                        <p className={styles.credits}>{text.ENDING_A.CREDITS}</p>
-
-                        <button className={styles.resetButton} onClick={() => {
+                    <ClickToAdvanceText
+                        segments={text.ENDING_A.SEGMENTS as TextSegment[]}
+                        onComplete={() => {
                             // Calculate new unlock parameters
                             const currentUnlock = new URLSearchParams(window.location.search).get('unlock') || '';
                             const unlockSet = new Set(currentUnlock.split(',').filter(Boolean));
@@ -272,10 +282,8 @@ export default function GamePage() {
 
                             const newUnlock = Array.from(unlockSet).join(',');
                             router.push(`/?unlock=${newUnlock}`);
-                        }} style={{ marginTop: '40px', color: '#000' }}>
-                            {text.UI.BUTTON_TITLE_BACK}
-                        </button>
-                    </div>
+                        }}
+                    />
                 </div>
             )}
         </div>

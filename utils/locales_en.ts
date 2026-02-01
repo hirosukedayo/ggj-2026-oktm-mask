@@ -86,12 +86,64 @@ export const TEXT_EN = {
                 { text: "The fire that day.\nDo you remember it?", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
+        SCENARIO_MURDER_WILDFIRE: [
+            [
+                { text: "It was a terrible day.\nThere was a murder.\nAnd the mountain was burning.", type: 'protagonist' },
+                { text: "Mr. Anzaki, it's okay.\nTake your time.", type: 'psychiatrist' },
+                { text: "Ashizawa was holding a knife.\nWith a face I'd never seen before,\nhe was stabbing Miura.", type: 'protagonist' },
+                { text: "Yes.", type: 'psychiatrist' },
+                { text: "I thought a war had started.", type: 'protagonist' },
+                { text: "Perhaps it was the same thing in the end.", type: 'protagonist' },
+                { text: "A war that would never be recorded in history.", type: 'protagonist' },
+                { text: "I thought it had nothing to do with me.\nI believed that for a long time.", type: 'protagonist' },
+                { text: "But at the same time,\nin the same place,\nEndo was there.", type: 'protagonist' },
+                { text: "That's why I've been troubled ever since.\nDid I actually cause\nthis war-like incident?", type: 'protagonist' },
+                { text: "I just watched.\nI wanted to believe\nit had nothing to do with me.", type: 'protagonist' },
+                { text: "Mr. Anzaki, I understand.\nYou were watching this scene,\nand you noticed Endo was there.", type: 'psychiatrist' },
+                { text: "Yes.\nBut I was going to pretend I didn't see anything.", type: 'protagonist' },
+                { text: "As time passed,\nand I learned more about the incident,\nI felt like I was being worn down mentally.", type: 'protagonist' }
+            ]
+        ] as TextSegment[][],
+        SCENARIO_MURDER_BICYCLE: [
+            [
+                { text: "Now that I think about it,\nthe first one to pick on Nashiro at the factory\nwas Ashizawa.", type: 'protagonist' },
+                { text: "Mr. Anzaki, I understand.", type: 'psychiatrist' },
+                { text: "I knew years ago that\nAshizawa and Endo were dating.", type: 'protagonist' },
+                { text: "Before I knew it, they had split up,\nand I thought she had started dating Miura.", type: 'protagonist' },
+                { text: "But you gradually realized\nthat wasn't the case.", type: 'psychiatrist' },
+                { text: "Yeah.\nA lot happened that I didn't know about.", type: 'protagonist' },
+                { text: "When I was with Miura,\nwe'd sometimes meet up with Endo, the three of us.\nThose times were just fun,\nbut I had no idea what was happening behind the scenes.", type: 'protagonist' },
+                { text: "I thought everything was peaceful.", type: 'protagonist' },
+                { text: "I never thought Nashiro would do such a thing,\nor that Ashizawa would become like that.", type: 'protagonist' }
+            ]
+        ] as TextSegment[][],
+        SCENARIO_BICYCLE_WILDFIRE: [
+            [
+                { text: "When Mt. Gahaishi was burning,\nI later learned that Nashiro set the fire.", type: 'protagonist' },
+                { text: "Such a terrible thing happened...", type: 'psychiatrist' },
+                { text: "I learned the rough motive later.", type: 'protagonist' },
+                { text: "Nashiro found out that Ashizawa\nregularly climbed that mountain.\nHe set it on fire\nto unleash all his pent-up anger.", type: 'protagonist' },
+                { text: "Yes.", type: 'psychiatrist' },
+                { text: "But Ashizawa wasn't caught in the wildfire.", type: 'protagonist' },
+                { text: "However, because someone set fire to it,\nAshizawa must have thought he was being attacked.\nOnce he realized he could be killed,\nhe thought he had to kill to survive.", type: 'protagonist' },
+                { text: "And you witnessed that, Mr. Anzaki.", type: 'psychiatrist' },
+                { text: "Yes.\nMe and one other person.\nEndo was watching too.", type: 'protagonist' },
+                { text: "We thought we had nothing to do\nwith this incident.\nBut there was a limit.", type: 'protagonist' },
+                { text: "It was hard to stay silent\nfor over 20 years.", type: 'protagonist' }
+            ]
+        ] as TextSegment[][],
         // True Ending (Spot A + Spot B)
         SCENARIO_ENDING: [
             [
-                { text: "Wait... this is...", type: 'protagonist' },
-                { text: "Yes, Mr. Anzaki.\nYou saw it that day.", type: 'psychiatrist' },
-                { text: "Do not look away from the truth.", type: 'psychiatrist' }
+                { text: "......", type: 'protagonist' },
+                { text: "Mr. Anzaki, are you okay?", type: 'psychiatrist' },
+                { text: "I'm fine, I can talk.", type: 'protagonist' },
+                { text: "......", type: 'protagonist' },
+                { text: "At first, I thought it was some kind of joke.\nAshizawa was stabbing Miura,\nand I was laughing... taking photos with my flip phone.", type: 'protagonist' },
+                { text: "But as I kept pointing the camera,\nI noticed Endo was watching\nfrom the opposite side.", type: 'protagonist' },
+                { text: "Endo was a bit far away, so I couldn't see clearly,\nbut she had an expression I couldn't put into words.", type: 'protagonist' },
+                { text: "You and Ms. Endo were watching\nas something terrible unfolded.", type: 'psychiatrist' },
+                { text: "Yeah......", type: 'protagonist' }
             ]
         ] as TextSegment[][],
         MESSAGES: {
@@ -118,6 +170,20 @@ export const TEXT_EN = {
         TITLE: "June 13, 2005\nMemories of the Zentsuji Riot",
         DESCRIPTION: "All memories are connected, and the truth is revealed.\n\nThe riot on June 13th was not a coincidence, but a setup.\nThe faint light left in the camera illuminates the truth buried in darkness.",
         CREDITS: "Thank you for playing.",
+        SEGMENTS: [
+            { text: "I thought maybe I could have stopped it.\nI've been thinking that all this time.", type: 'protagonist' },
+            { text: "When Endo consulted me,\nmaybe I should have contacted Miura.\nMaybe I shouldn't have gotten involved with Nashiro at the factory.", type: 'protagonist' },
+            { text: "I see.", type: 'psychiatrist' },
+            { text: "When Endo passed away last year,\nI started remembering those days.", type: 'protagonist' },
+            { text: "It's tough when some of your acquaintances are torn apart by an incident.", type: 'protagonist' },
+            { text: "But I kept trying to remain a bystander.", type: 'protagonist' },
+            { text: "I thought that was tough.\nReally.", type: 'protagonist' },
+            { text: "I wished I could have predicted the future, even just a little.", type: 'protagonist' },
+            { text: "Thank you for sharing that with us.", type: 'psychiatrist' },
+            { text: "Mr. Anzaki,\nfrom here, you can take your time talking about those feelings.", type: 'psychiatrist' },
+            { text: "It's okay to go slowly.", type: 'psychiatrist' },
+            { text: "Let me hear your voice. Your voice.", type: 'psychiatrist' }
+        ] as TextSegment[]
     },
 
 
