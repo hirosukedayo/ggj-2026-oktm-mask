@@ -27,7 +27,7 @@ export const TEXT_EN = {
         BUTTON_TITLE_BACK: "Return to Title",
     },
     TITLE_SCREEN: {
-        TITLE: "June 13, 2005\nZentsuji Unsolved Riot Case Recollection",
+        TITLE: "Dual Recall:\nJune 13, 2005 Zentsuji Murder Case, Kagawa Prefecture",
         DESCRIPTION: "Global Game Jam @ Okutama - Team B",
         BUTTON_START: "Start",
         // Scenario Selection (shown after unlock)

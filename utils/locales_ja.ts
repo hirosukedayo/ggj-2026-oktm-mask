@@ -29,7 +29,7 @@ export const TEXT_JA = {
         BUTTON_TITLE_BACK: "タイトルへ戻る",
     },
     TITLE_SCREEN: {
-        TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件追憶",
+        TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件・二重追憶",
         DESCRIPTION: "Global Game Jam @ Okutama - Team B",
         BUTTON_START: "はじめる",
         // Scenario Selection (shown after unlock)
