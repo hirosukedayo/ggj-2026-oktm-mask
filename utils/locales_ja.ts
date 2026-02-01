@@ -29,7 +29,7 @@ export const TEXT_JA = {
         BUTTON_TITLE_BACK: "タイトルへ戻る",
     },
     TITLE_SCREEN: {
-        TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件追憶",
+        TITLE: "2005年6月13日\n香川県善通寺未解決暴動事件・二重追憶",
         DESCRIPTION: "Global Game Jam @ Okutama - Team B",
         BUTTON_START: "はじめる",
         // Scenario Selection (shown after unlock)
@@ -47,9 +47,21 @@ export const TEXT_JA = {
         BUTTON_ACTION: "わかった。少し待ってほしい",
         SEGMENTS: [
             { text: "声を聞かせてください。声を。", type: 'psychiatrist' },
-            { text: "安嵜さん\nあなたは今から21年前……\n2005年の、あの日のことを\n思い出せてきています", type: 'psychiatrist' },
-            { text: "あの恐ろしい記憶へ\n少しずつ向き会えています。", type: 'psychiatrist' },
-            { text: "少しずつで大丈夫です\nゆっくりでいいですよ", type: 'psychiatrist' }
+            {
+                text: "安嵜さん\nあなたは今から21年前……\n2005年の、あの日のことを\n徐々に思い出せてきています",
+                type: 'psychiatrist',
+                style: { fontStyle: 'psychiatrist' }
+            },
+            {
+                text: "あの恐ろしい記憶へ\n少しずつ向きあえています。",
+                type: 'psychiatrist',
+                style: { fontStyle: 'psychiatrist' }
+            },
+            {
+                text: "ふたつの記憶を同時に思い出す手法\n“デュアル・リコール”は効果的に進んでいます。\n少しずつで大丈夫です\nゆっくりでいいですよ",
+                type: 'psychiatrist',
+                style: { fontStyle: 'psychiatrist' }
+            }
         ] as TextSegment[]
     },
     RESULT_A: {
@@ -71,33 +83,99 @@ export const TEXT_JA = {
             [ // A-4
                 { text: "普段は遠くの風景を見るなんて\n退屈だったが\nこの日は目を離せないことがあった", type: 'protagonist' },
                 { text: "安嵜さんが5度目に\nカウンセリングへいらっしゃったとき\nその風景の話をされていましたね", type: 'psychiatrist' }
+            ],
+            [ // A-5
+                { text: "20歳を過ぎて\n少なくない友人が都市部へ行ってしまったなか\n僕はずいぶんと長く善通寺の町にいた", type: 'protagonist' },
+                { text: "安嵜さんは\n2度目に受診したとき\n「ずっと変わらず居続けるのかな」と\nおっしゃっていましたね", type: 'psychiatrist' },
+                { text: "実際、食品工場に就職してから\nよりその思いは強くなった\n芦沢さんに誘われて\nなあなあの気持ちで入ってしまっていたなあ", type: 'protagonist' }
             ]
         ] as TextSegment[][],
         // Incident Scenarios
         SCENARIO_MURDER: [
             [
-                { text: "血の匂いがした気がする...", type: 'protagonist' },
-                { text: "安嵜さん、それは重要な記憶です。\n恐れずに思い出してみましょう。", type: 'psychiatrist' }
+                { text: "本当にこういうことが起きた時\n身体が動かなくなるんだと知ったよ", type: 'protagonist' },
+                { text: "たしか、たしか\n「やめろ」とか「たすけて」って\n三浦の声が\n空を反響していた気がする", type: 'protagonist' },
+                { text: "三浦、とても甲高い声で叫んでた\n僕は何もできなかった\n見ていただけだった", type: 'protagonist' },
+                { text: "安嵜さんが前にお話してくれた\n芦澤さんが三浦さんを殺めた瞬間ですね……", type: 'psychiatrist' },
+                { text: "大丈夫です、\nそして、安嵜さんを苦しめているのは、\nこの事件に遭遇したことじゃない", type: 'psychiatrist' },
+                { text: "ゆっくりとで大丈夫です", type: 'psychiatrist' }
             ]
         ] as TextSegment[][],
         SCENARIO_BICYCLE: [
             [
-                { text: "倒れた自転車...誰かのものだったか...", type: 'protagonist' },
-                { text: "誰の自転車だったか、思い出せますか？", type: 'psychiatrist' }
+                { text: "突然、食品工場を辞めてから\n「あいつは何をしてるんだろうな」と話していた\n名城があの日\n自転車で走っているのを見つけた", type: 'protagonist' },
+                { text: "名城さんですか？\nこの前もお話いただいていましたね", type: 'psychiatrist' },
+                { text: "名城は仕事で使えない奴で\n僕や他の奴が隠れて蹴りを入れていたりしてたら\n気が付いたら辞めてたかな", type: 'protagonist' },
+                { text: "自転車はものすごい速さだった\n競輪みたいな速さで異様だった", type: 'protagonist' }
             ]
         ] as TextSegment[][],
         SCENARIO_WILDFIRE: [
             [
-                { text: "煙が見えた...山の方が赤かった...", type: 'protagonist' },
-                { text: "あの日の火事のことですね。\n覚えていますか？", type: 'psychiatrist' }
+                { text: "「我拝師山が燃えさかっている」\nそう職場で聞いて\nみんな静まり返っていた", type: 'protagonist' },
+                { text: "「まさか」と思った", type: 'protagonist' },
+                { text: "安嵜さんが4回目のカウンセリングの時に言った\n遠藤さんとお会いした翌日に？", type: 'psychiatrist' },
+                { text: "そう\n遠藤の、三浦についての\n相談に乗ったつもりだった", type: 'protagonist' },
+                { text: "遠藤は三浦が\n「マジで燃やしてやりたい」と\n言い続けていて、まいってしまったって", type: 'protagonist' }
+            ]
+        ] as TextSegment[][],
+        SCENARIO_MURDER_WILDFIRE: [
+            [
+                { text: "ひどい一日だった\n人殺しがあって\n山が燃えさかったのだから", type: 'protagonist' },
+                { text: "安嵜さん、大丈夫です\nゆっくりで大丈夫です", type: 'psychiatrist' },
+                { text: "芦沢さんが刃物を持って\n見たことがない顔で三浦を刺していた", type: 'protagonist' },
+                { text: "はい", type: 'psychiatrist' },
+                { text: "戦争が始まったとすら思った", type: 'protagonist' },
+                { text: "結局は同じようなものだったのかもしれない", type: 'protagonist' },
+                { text: "歴史にもどこも残らないような戦争だった", type: 'protagonist' },
+                { text: "自分には関係ないはずなのだと思っていた\nそう長らく思い込んでいた", type: 'protagonist' },
+                { text: "でも同じ時間\n同じ場所に\n遠藤がいた", type: 'protagonist' },
+                { text: "だから僕はずっとひっかかることになる\n僕が実は戦争みたいな事件を\n引きおこしたんじゃないかって", type: 'protagonist' },
+                { text: "僕は\nただ見ていただけで関係ないんだと\nそう信じていたかった", type: 'protagonist' },
+                { text: "安嵜さん、わかりました\nあなたはこの現場を傍観していて\nそのなかで遠藤さんがいたことに気づいたんですね", type: 'psychiatrist' },
+                { text: "そう\nでも見なかったことにするつもりだった", type: 'protagonist' },
+                { text: "時間が経ち\n事件の内容がわかるたびに\n精神的に削れていくような気持ちになった", type: 'protagonist' }
+            ]
+        ] as TextSegment[][],
+        SCENARIO_MURDER_BICYCLE: [
+            [
+                { text: "思い出してみれば工場で\n名城をまっさきに詰めていたのは\n芦沢さんだったなって", type: 'protagonist' },
+                { text: "安嵜さん、わかりました", type: 'psychiatrist' },
+                { text: "芦沢さんと遠藤が付き合ってたのを\n数年前に知っていた", type: 'protagonist' },
+                { text: "気が付いたら別れていて\n三浦と付き合うようになったんだと思っていた", type: 'protagonist' },
+                { text: "でもだんだん、そうではないと気づいたんですね", type: 'psychiatrist' },
+                { text: "うん\n知らないところでいろいろあったんだと", type: 'protagonist' },
+                { text: "三浦との付き合いのなかで\n遠藤と三人で会うこともあったが\nこういうとき楽しいだけで\n裏で何が起きていたかなんてわからないよな", type: 'protagonist' },
+                { text: "平和な感じだと思い込んでいた", type: 'protagonist' },
+                { text: "名城があんなことをするとは思わないし\n芦沢さんがああなるとも思わなかった", type: 'protagonist' }
+            ]
+        ] as TextSegment[][],
+        SCENARIO_BICYCLE_WILDFIRE: [
+            [
+                { text: "我拝師山が燃えさかったとき\nあとで名城が放火したと知った", type: 'protagonist' },
+                { text: "そんな恐ろしいことが起きたんですね……", type: 'psychiatrist' },
+                { text: "後でおおまかな動機を知った", type: 'protagonist' },
+                { text: "芦沢さんが山に定期的に登っているのを\n知りつけた名城が\nこれまでの怒りをぶちまけるように\n火を放った", type: 'protagonist' },
+                { text: "はい", type: 'psychiatrist' },
+                { text: "でも芦沢さんは山火事に巻き込まれなかった", type: 'protagonist' },
+                { text: "ただ、逆に火を放たれたことで\n芦沢さんが誰かに攻撃されたと思ったんだろうね\n殺されると気づいたら\n殺さないと生き残れないと", type: 'protagonist' },
+                { text: "その姿を安嵜さんは見届けたのですね", type: 'psychiatrist' },
+                { text: "そう\n俺ともうひとり\n遠藤が見つめていた", type: 'protagonist' },
+                { text: "この事件に\n俺たちは関係しないと思い込んでいた\nでも限界があった", type: 'protagonist' },
+                { text: "20年以上も\n黙っているのは難しかった", type: 'protagonist' }
             ]
         ] as TextSegment[][],
         // True Ending (Spot A + Spot B)
         SCENARIO_ENDING: [
             [
-                { text: "待ってくれ...これは...", type: 'protagonist' },
-                { text: "そうです、安嵜さん。\nあなたはあの日、見てしまったんですね。", type: 'psychiatrist' },
-                { text: "真実から目を逸らさないでください。", type: 'psychiatrist' }
+                { text: "……", type: 'protagonist' },
+                { text: "安嵜さん大丈夫ですか？", type: 'psychiatrist' },
+                { text: "大丈夫だ、喋れる", type: 'protagonist' },
+                { text: "……", type: 'protagonist' },
+                { text: "僕は最初なにかのジョークだと思ったのか\n芦沢さんが三浦を刺しているのを\n笑って……ガラケーで写真を撮っていたんだよ", type: 'protagonist' },
+                { text: "でもガラケーカメラを向けているうちに\n遠藤が向かい側で\n見ているのに気づいたんだ", type: 'protagonist' },
+                { text: "遠藤は少し遠くにいたからはっきりとはわからないが\n言葉に出来ない表情をしていた", type: 'protagonist' },
+                { text: "恐ろしい事態が起きているの\n安嵜さんと遠藤さんは見つめていた", type: 'psychiatrist' },
+                { text: "そうだな……", type: 'protagonist' }
             ]
         ] as TextSegment[][],
         MESSAGES: {
@@ -124,6 +202,20 @@ export const TEXT_JA = {
         TITLE: "2005年6月13日\n安嵜の記憶",
         DESCRIPTION: "全ての記憶が繋がり、真実が明らかになった。\n\n6月13日のあの暴動は、偶然ではなく仕組まれたものだったのだ。\nカメラに残された微かな光が、闇に葬られた真実を照らし出す。",
         CREDITS: "Thank you for playing.",
+        SEGMENTS: [
+            { text: "僕は止められたんじゃないかと\nずっと思っていたんだ", type: 'protagonist' },
+            { text: "遠藤から相談されたとき\n三浦に連絡すればよかったのかとかさ\n名城には工場にいるときにかかわらなければよかったのかとかさ", type: 'protagonist' },
+            { text: "そうですね", type: 'psychiatrist' },
+            { text: "やっぱり去年に遠藤が亡くなったときに\nこの頃のことを思い出してしまって", type: 'protagonist' },
+            { text: "自分の知り合いの一部が事件でばらばらになったのはきついぞ", type: 'protagonist' },
+            { text: "でも僕は傍観者で居続けようとしてしまったのだな", type: 'protagonist' },
+            { text: "それがきついと思ったわ\n本当に", type: 'protagonist' },
+            { text: "未来が少しでも予測さえできればと思ったよ", type: 'protagonist' },
+            { text: "そこまで話してくれてありがとうございます。", type: 'psychiatrist' },
+            { text: "安嵜さん\nここからはゆっくりとその感情を話していただければ大丈夫です", type: 'psychiatrist' },
+            { text: "ゆっくりで、大丈夫です", type: 'psychiatrist' },
+            { text: "声を聞かせてください。声を。", type: 'psychiatrist' }
+        ] as TextSegment[]
     },
 
 

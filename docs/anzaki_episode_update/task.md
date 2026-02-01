@@ -1,0 +1,22 @@
+# タスク: 安嵜エピソードの作り込み
+
+- [x] プロローグの更新 <!-- id: 0 -->
+    - [x] `utils/locales.ts` の型定義更新（`style` プロパティの追加）
+    - [x] `utils/locales_ja.ts` のテキスト更新と斜体適用
+- [x] エピソードA-5の追加 <!-- id: 1 -->
+    - [x] `utils/locales_ja.ts` に新規テキストを追加
+- [x] 殺人現場シナリオの更新 <!-- id: 2 -->
+    - [x] `utils/locales_ja.ts` の `SCENARIO_MURDER` を更新
+- [x] 山火事シナリオの更新 <!-- id: 3 -->
+    - [x] `utils/locales_ja.ts` の `SCENARIO_WILDFIRE` を更新
+- [x] 自転車シナリオの更新 <!-- id: 4 -->
+    - [x] `utils/locales_ja.ts` の `SCENARIO_BICYCLE` を更新
+- [x] 殺人現場+山火事コンボシナリオの追加 <!-- id: 5 -->
+    - [x] `utils/locales_ja.ts` に `SCENARIO_MURDER_WILDFIRE` を追加
+    - [x] `app/a/page.tsx` のロジックを更新
+- [x] 殺人現場+自転車コンボシナリオの追加 <!-- id: 6 -->
+    - [x] `utils/locales_ja.ts` に `SCENARIO_MURDER_BICYCLE` を追加
+    - [x] `app/a/page.tsx` のロジックを更新
+- [x] 自転車+山火事コンボシナリオの追加 <!-- id: 7 -->
+    - [x] `utils/locales_ja.ts` に `SCENARIO_BICYCLE_WILDFIRE` を追加
+    - [x] `app/a/page.tsx` のロジックを更新
