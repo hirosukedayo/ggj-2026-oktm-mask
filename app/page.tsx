@@ -1,19 +1,109 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 import { ClickToAdvanceText } from "@/components/ClickToAdvanceText/ClickToAdvanceText";
 import { useLanguage } from "@/components/LanguageProvider";
+import { TITLE_BGM_VOLUME, PROLOGUE_BGM_VOLUME } from "@/utils/audioConfig";
+
 
 type Step = 'title' | 'prologue_a' | 'prologue_e' | 'prologue_a2' | 'prologue_n' | 'prologue_x';
 
 function HomeContent() {
   const [step, setStep] = useState<Step>('title');
   const [showPrologueButton, setShowPrologueButton] = useState(false);
+  // Audio Refs
+  const titleAudioRef = useRef<HTMLAudioElement>(null);
+  const prologueAudioRef = useRef<HTMLAudioElement>(null);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const { text, setLanguage, language } = useLanguage();
+
+  // Manage BGM
+  useEffect(() => {
+    // Current step specific Audio
+    // Clean up all first to be safe (safeguard against overlaps)
+    const stopAll = () => {
+      if (titleAudioRef.current) {
+        titleAudioRef.current.pause();
+        titleAudioRef.current.currentTime = 0;
+      }
+      if (prologueAudioRef.current) {
+        prologueAudioRef.current.pause();
+        prologueAudioRef.current.currentTime = 0;
+      }
+    };
+
+    stopAll();
+
+    let targetAudio: HTMLAudioElement | null = null;
+    let shouldLoop = false;
+    let volume = 0;
+
+    if (step === 'title') {
+      targetAudio = titleAudioRef.current;
+      shouldLoop = false; // Title BGM plays once (as requested: "title.mp3を一回流してください")
+      volume = TITLE_BGM_VOLUME;
+    } else if (step.startsWith('prologue_')) {
+      targetAudio = prologueAudioRef.current;
+      shouldLoop = true; // Prologue BGM loops (as requested: "プロローグではループさせてください")
+      volume = PROLOGUE_BGM_VOLUME;
+    }
+
+    if (!targetAudio) return;
+
+    // Setup and Play
+    targetAudio.volume = volume;
+    targetAudio.loop = shouldLoop;
+
+    // Attempt play
+    const play = async () => {
+      try {
+        await targetAudio.play();
+        console.log(`BGM playing for ${step}`);
+      } catch (error) {
+        console.warn("Autoplay blocked, waiting for interaction...", error);
+
+        // Interaction handler
+        const onInteract = () => {
+          targetAudio.play().catch(e => console.error("Interaction play failed", e));
+          // Remove listeners once triggers
+          removeListeners();
+        };
+
+        const removeListeners = () => {
+          document.removeEventListener('click', onInteract);
+          document.removeEventListener('touchstart', onInteract);
+          document.removeEventListener('keydown', onInteract);
+        };
+
+        document.addEventListener('click', onInteract, { once: true });
+        document.addEventListener('touchstart', onInteract, { once: true });
+        document.addEventListener('keydown', onInteract, { once: true });
+
+        // Clean up listeners if effect invalidates before interaction
+        return removeListeners;
+      }
+    };
+
+    const cleanupPromise = play();
+
+    return () => {
+      stopAll();
+      // If we returned a cleanup function from play (listener remover), call it
+      cleanupPromise.then(cleanup => cleanup && cleanup());
+    };
+  }, [step]);
+
+  // Clean up purely on unmount
+  useEffect(() => {
+    return () => {
+      if (titleAudioRef.current) { titleAudioRef.current.pause(); titleAudioRef.current.currentTime = 0; }
+      if (prologueAudioRef.current) { prologueAudioRef.current.pause(); prologueAudioRef.current.currentTime = 0; }
+    };
+  }, []);
 
   // Check unlock status via URL parameter
   const unlockParam = searchParams.get('unlock') ?? '';
@@ -107,6 +197,20 @@ function HomeContent() {
 
   return (
     <div className={styles.page}>
+      {/* Hidden Audio Elements */}
+      <audio
+        ref={titleAudioRef}
+        src="/sounds/title.mp3"
+        preload="auto"
+        onEnded={() => console.log("Title BGM ended")}
+      />
+      <audio
+        ref={prologueAudioRef}
+        src="/sounds/prologue.mp3"
+        preload="auto"
+        loop
+      />
+
       <main className={styles.main}>
         {step === 'title' ? (
           <>
