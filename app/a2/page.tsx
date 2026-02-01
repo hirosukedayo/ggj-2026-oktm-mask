@@ -227,7 +227,14 @@ export default function AshidaScenarioPage() {
                         </div>
 
 
-                        <button className={styles.resetButton} onClick={() => router.push('/?unlock=a,e,a2,n')} style={{ marginTop: '40px', color: '#000' }}>
+                        <button className={styles.resetButton} onClick={() => {
+                            const currentUnlock = new URLSearchParams(window.location.search).get('unlock') || '';
+                            const unlockSet = new Set(currentUnlock.split(',').filter(Boolean));
+                            unlockSet.add('a2');
+
+                            const newUnlock = Array.from(unlockSet).join(',');
+                            router.push(`/?unlock=${newUnlock}`);
+                        }} style={{ marginTop: '40px', color: '#000' }}>
                             {text.UI.BUTTON_TITLE_BACK}
                         </button>
                     </div>
